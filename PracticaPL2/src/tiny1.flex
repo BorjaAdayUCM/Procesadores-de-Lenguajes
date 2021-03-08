@@ -136,7 +136,7 @@ ampersand = &
 {modulo}                  {return ops.unidadMod();}
 {menor}                   {return ops.unidadMenor();}
 {mayor}                   {return ops.unidadMayor();}
-{menorIgual}              {return ops.unidadMenorigual();}
+{menorIgual}              {return ops.unidadMenorIgual();}
 {mayorIgual}              {return ops.unidadMayorIgual();}
 {igualdad}                {return ops.unidadIgualdad();}
 {distinto}                {return ops.unidadDistinto();}
