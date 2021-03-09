@@ -1,8 +1,8 @@
 
 public class ALexOperations {
-	private AnalizadorLexicoTiny alex;
+	private AnalizadorLexicoTiny1 alex;
 
-	public ALexOperations(AnalizadorLexicoTiny alex) {
+	public ALexOperations(AnalizadorLexicoTiny1 alex) {
 		this.alex = alex;
 	}
 
@@ -70,7 +70,7 @@ public class ALexOperations {
 		return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(), ClaseLexica.IGUALDAD);
 	}
 
-	public UnidadLexica unidadDistitnto() {
+	public UnidadLexica unidadDistinto() {
 		return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(), ClaseLexica.DISTINTO);
 	}
 
@@ -243,6 +243,6 @@ public class ALexOperations {
 	}
 
 	public void error() {
-		System.err.println("***" + alex.fila() + " Caracter inexperado: " + alex.lexema());
+		System.err.println("Fila: " + alex.fila() + ", Columna: " + alex.columna() + ", " + "Caracter inexperado:" + alex.lexema());
 	}
 }

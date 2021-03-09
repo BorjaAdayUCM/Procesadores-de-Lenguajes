@@ -1,0 +1,73 @@
+digraph finite_state_machine {
+	size = "100";
+	node [shape = doublecircle]; INICIO, REC_PARA, REC_PARC, REC_EOF, REC_DIS, REC_IGUAL, REC_IGUALDAD, REC_SEP,
+								 REC_PyC, REC_DIV, REC_POR, REC_MENOR, REC_MENORIGUAL, REC_MAYOR, REC_MAYORIGUAL, REC_VARIABLE,
+							   	 REC_MAS, REC_MENOS, REC_ENT, REC_0, REC_DEC, REC_EXP0, REC_EXP;
+
+	node [shape = circle];
+	INICIO -> INICIO [label = "\\b, \\r, \\n, blank space" ];
+	INICIO -> REC_VARIABLE [label = "[a-z], [A-Z]" ];
+	INICIO -> REC_MAS [label = "+" ];
+	INICIO -> REC_MENOS [label = "-" ];
+	INICIO -> REC_POR [label = "*" ];
+	INICIO -> REC_DIV [label = "/" ];
+	INICIO -> REC_0 [label = "0" ];
+	INICIO -> REC_PARA [label = "(" ];
+	INICIO -> REC_PARC [label = ")" ];
+	INICIO -> REC_PyC [label = ";" ];
+	INICIO -> REC_MENOR [label = "<" ];
+	INICIO -> REC_MAYOR [label = ">" ];
+	INICIO -> REC_ISEP [label = "&" ];
+	INICIO -> REC_IGUAL [label = "=" ];
+	INICIO -> REC_IDIS [label = "!" ];
+	INICIO -> REC_EOF [label = "EOF" ];
+	INICIO -> REC_ENT [label = "[1-9]" ];
+
+	REC_VARIABLE -> REC_VARIABLE [ label = "[a-z], [A-Z], [0-9], _" ];
+
+	REC_ENT -> REC_ENT [label = "[0-9]" ];
+	REC_ENT -> REC_IDEC [label = "." ];
+	REC_ENT -> REC_IEXPL [label = "e, E" ];
+
+	REC_0 -> REC_IDEC [ label = "." ];
+
+	REC_MAS -> REC_ENT [label = "[1-9]" ];
+	REC_MAS -> REC_0 [label = "0" ];
+
+	REC_MENOS -> REC_ENT [label = "[1-9]" ];
+	REC_MENOS -> REC_0 [label = "0" ];
+
+	REC_MENOR -> REC_MENORIGUAL [label = "=" ];
+
+	REC_MAYOR -> REC_MAYORIGUAL [label = "=" ];
+
+	REC_ISEP -> REC_SEP [label = "&" ];
+
+	REC_IDIS -> REC_DIS [label = "="];
+
+	REC_IGUAL -> REC_IGUALDAD [label = "="];
+
+	REC_IDEC -> REC_DEC [label = "[1-9]"];
+	REC_IDEC -> REC_IDEC10 [label = "0"];
+
+	REC_IDEC10 -> REC_DEC [label = "[1-9]"];
+	REC_IDEC10 -> REC_IDEC20 [label = "0"];
+	REC_IDEC10 -> REC_IEXPL [label = "e, E"];
+
+	REC_IDEC20 -> REC_DEC [label = "[1-9]"];
+	REC_IDEC20 -> REC_IDEC20 [label = "0"];
+
+	REC_DEC -> REC_DEC [label = "[1-9]"];
+	REC_DEC -> REC_IDEC20 [label = "0"];
+	REC_DEC -> REC_IEXPL [label = "e, E"];
+
+	REC_IEXPL -> REC_IEXPS [label = "+, -"];
+	REC_IEXPL -> REC_EXP [label = "[1-9]"];
+	REC_IEXPL -> REC_EXP0 [label = "0"];
+
+	REC_IEXPS -> REC_EXP0 [label = "0"];
+	REC_IEXPS -> REC_EXP [label = "[1-9]"];
+
+	REC_EXP -> REC_EXP [label = "[0-9]"];
+
+}
