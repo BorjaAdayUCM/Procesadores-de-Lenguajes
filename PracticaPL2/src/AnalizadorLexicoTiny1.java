@@ -6,7 +6,7 @@
 
 
 // See https://github.com/jflex-de/jflex/issues/222
-@SuppressWarnings("FallThrough")
+@SuppressWarnings("fallthrough")
 class AnalizadorLexicoTiny1 {
 
   /** This character denotes the end of file. */
