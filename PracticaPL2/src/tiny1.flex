@@ -1,5 +1,3 @@
-
-
 %%
 %line
 %column

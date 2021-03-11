@@ -114,6 +114,6 @@ write ""; nl;
 write "a6%$$33.."; nl;
 write "\b\r\n"; nl;
 #write "una línea
-#	   dos líneas"; nl;
+#		dos líneas"; nl;
 #write """; nl;
 call escribe_nombres(arbol)
