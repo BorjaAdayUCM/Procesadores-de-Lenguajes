@@ -1,0 +1,12 @@
+bool llueve;
+bool suelo;
+int metrosLluvia;
+bool coche;
+bool pesado
+&&
+llueve = true;
+suelo = false;
+metrosLluvia = 12e4567;
+coche = false;
+pesado = false;
+accidente = (llueve and suelo and metrosLluvia > 13e4567 and coche and pesado)

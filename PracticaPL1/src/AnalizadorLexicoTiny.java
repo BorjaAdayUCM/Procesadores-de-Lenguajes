@@ -1,8 +1,4 @@
-
-
-import java.io.FileInputStream;
 import java.io.Reader;
-import java.io.InputStreamReader;
 import java.io.IOException;
 
 public class AnalizadorLexicoTiny {
@@ -207,7 +203,7 @@ public class AnalizadorLexicoTiny {
 	private boolean hayPyC() {return sigCar == ';';}
 	
 	
-	private boolean haySep() {return sigCar == ' ' || sigCar == '\t' || sigCar=='\n';}
+	private boolean haySep() {return sigCar == ' ' || sigCar == '\t' || sigCar=='\n' || sigCar == '\r' || sigCar == '\b';}
 	//private boolean hayNL() {return sigCar == '\r' || sigCar == '\b' || sigCar == '\n';}
 	
 
@@ -306,19 +302,8 @@ public class AnalizadorLexicoTiny {
 		return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.EOF);     
 	}    
 
-	private void error() {
-		System.err.println("("+filaActual+','+columnaActual+"): Caracter inexperado");  
+	public void error() {
+		System.err.println("Fila: " + this.filaActual + ", Columna: " + this.columnaActual + ", " + "Caracter inexperado.");
 		System.exit(1);
 	}
-
-	public static void main(String arg[]) throws IOException {
-		Reader input = new InputStreamReader(new FileInputStream("input.txt"));
-		AnalizadorLexicoTiny al = new AnalizadorLexicoTiny(input);
-		UnidadLexica unidad;
-		do {
-			unidad = al.sigToken();
-			System.out.println(unidad);
-		}
-		while (unidad.clase() != ClaseLexica.EOF);
-	} 
 }
