@@ -1,0 +1,5 @@
+bool->llueve;
+hola = 32,05;
+bool. suelo;
+&&&
+write "Perfecto";
