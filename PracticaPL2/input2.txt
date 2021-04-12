@@ -1,5 +1,38 @@
-real peso;
-bool pesado
+type tNodo;
+type record {
+tClase clase1;
+tClase clase2;
+int n;
+real time;
+} tNodo;
+var tNodo nodos;
+#esto es un comentario random
+#Esto es como c++ pero bien hecho
+proc suma(int a, int b){
+return a+b;
+}
+proc cuentaCuentos(string cuento){
+write cuento; nl;
+}
 &&
-peso = (45.0 * 12e-56) / -2.05;
-pesado = (peso > 10.0) or (peso / 2 <= +0.0)
+arbol->arbol.nombre[i] = 3.000001 + 3e12;
+call 104.0 * 0.000005e15 mod 32;
+
+if lucas = 52 then return 13 else return "lucas no tiene 52 anos" endif;
+
+proc bucleInfinito(int n){
+int i = 0;
+int j = 0;
+while i != n do
+read dato
+write "Este es el dato:";
+write dato; nl;
+j = j + 1;
+}
+#Programa pincipal
+&&
+int n3 = 52;
+call suma(3,2);
+call cuentaCuentos("Este es el cuento que narra el fin la historia interminable");
+call bucleInfinito(n3);
+
