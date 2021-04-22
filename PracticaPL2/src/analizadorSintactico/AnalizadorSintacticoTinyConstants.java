@@ -139,7 +139,6 @@ public interface AnalizadorSintacticoTinyConstants {
     "\",\"",
     "\"&\"",
     "<identificador>",
-    "\"lee\"",
   };
 
 }

@@ -3,10 +3,14 @@ package analizadorSintactico;
 
 public class AnalizadorSintacticoTiny implements AnalizadorSintacticoTinyConstants {
 
+  final public void Sp() throws ParseException {
+    Programa();
+    jj_consume_token(0);
+  }
+
   final public void Programa() throws ParseException {
     PDeclaraciones();
     PInstrucciones();
-    jj_consume_token(0);
   }
 
   final public void PDeclaraciones() throws ParseException {
@@ -55,9 +59,8 @@ public class AnalizadorSintacticoTiny implements AnalizadorSintacticoTinyConstan
       break;
     case proc:
       jj_consume_token(proc);
-      jj_consume_token(67);
-      jj_consume_token(pApert);
-      jj_consume_token(pCierre);
+      jj_consume_token(identificador);
+      ParForm();
       Bloque();
       break;
     default:
@@ -808,8 +811,8 @@ public class AnalizadorSintacticoTiny implements AnalizadorSintacticoTinyConstan
 
   public ParseException generateParseException() {
     jj_expentries.removeAllElements();
-    boolean[] la1tokens = new boolean[68];
-    for (int i = 0; i < 68; i++) {
+    boolean[] la1tokens = new boolean[67];
+    for (int i = 0; i < 67; i++) {
       la1tokens[i] = false;
     }
     if (jj_kind >= 0) {
@@ -831,7 +834,7 @@ public class AnalizadorSintacticoTiny implements AnalizadorSintacticoTinyConstan
         }
       }
     }
-    for (int i = 0; i < 68; i++) {
+    for (int i = 0; i < 67; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

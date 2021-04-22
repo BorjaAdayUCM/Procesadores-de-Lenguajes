@@ -74,8 +74,8 @@ PARSER_END(AnalizadorSintacticoTiny)
   TOKEN: {<ampersand:"&">}
   TOKEN:{<identificador:<letra>(<letra>|<digito>|"_")*>}
   
-
-  void Programa() : {} {PDeclaraciones() PInstrucciones() <EOF>}
+  void Sp() : {} {Programa() <EOF>}
+  void Programa() : {} {PDeclaraciones() PInstrucciones()}
   void PDeclaraciones() : {} {LDecs() <sep> | {}}
 
   void LDecs() : {} {Dec() RLDecs()}
