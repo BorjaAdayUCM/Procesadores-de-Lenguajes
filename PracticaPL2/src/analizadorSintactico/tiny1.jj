@@ -7,19 +7,17 @@ package analizadorSintactico;
 public class AnalizadorSintacticoTiny {}
 PARSER_END(AnalizadorSintacticoTiny)
 
-  SKIP: {<["\t"," ","\r","\b","\n"]>}
-  SKIP: {<"#"(~["\n"])*>}
-
-  TOKEN: {<#letra:["a"-"z","A"-"Z"]>}
-  TOKEN: {<#digitoPositivo:["1"-"9"]>}
-  TOKEN: {<#digito:<digitoPositivo>|"0">}
-  TOKEN: {<#parteEntera:<digitoPositivo>(<digito>)*|"0">}
-  TOKEN: {<numeroEntero:("+"|"-")?<parteEntera>>}
-  TOKEN: {<#parteDecimal:"."("0"|(<digito>)*<digitoPositivo>)>}
-  TOKEN: {<#parteExponencial:("E"|"e")<numeroEntero>>}
-  TOKEN: {<numeroReal:<numeroEntero>(<parteDecimal>|<parteExponencial>|<parteDecimal><parteExponencial>)>}
-  TOKEN: {<cadena:"\""(~["\"","\t","\b","\r","\n"])*"\"">}
-  TOKEN: {<identificador:<letra>(<letra>|<digito>|"_")*>}
+  SKIP:{<["\t"," ","\r","\b","\n"]>}
+  SKIP:{<"#"(~["\n"])*>} 
+  TOKEN:{<#letra:["a"-"z","A"-"Z"]>}
+  TOKEN:{<#digitoPositivo:["1"-"9"]>}
+  TOKEN:{<#digito:<digitoPositivo>|"0">} 
+  TOKEN:{<#parteEntera:<digitoPositivo>(<digito>)* |"0">} 
+  TOKEN:{<numeroEntero:("+"|"-")?<parteEntera>>}
+  TOKEN:{<#parteDecimal:"."("0"|(<digito>)*<digitoPositivo>)>}
+  TOKEN:{<#parteExponencial:("E"|"e")<numeroEntero>>}
+  TOKEN:{<numeroReal:<numeroEntero>(<parteDecimal>|<parteExponencial>|<parteDecimal><parteExponencial>)>}
+  TOKEN:{<cadena:"\""(~["\"","\t","\b","\r","\n"])*"\"">}
   TOKEN: {<int_pr:"int">}
   TOKEN: {<real:"real">}
   TOKEN: {<bool:"bool">}
@@ -74,6 +72,8 @@ PARSER_END(AnalizadorSintacticoTiny)
   TOKEN: {<flecha:"->">}
   TOKEN: {<coma:",">}
   TOKEN: {<ampersand:"&">}
+  TOKEN:{<identificador:<letra>(<letra>|<digito>|"_")*>}
+  
 
   void Programa() : {} {PDeclaraciones() PInstrucciones() <EOF>}
   void PDeclaraciones() : {} {LDecs() <sep> | {}}
@@ -92,7 +92,7 @@ PARSER_END(AnalizadorSintacticoTiny)
   void Bloque() : {} {<llaveAper> RBloque()}
   void RBloque() : {} {Programa() <llaveCierre> | <llaveCierre>}
   void Tipo() : {} {<int_pr> | <real> | <bool> | <string> | <identificador> | <array> <corApert> <numeroEntero> <corCierre> <of> Tipo() | <record> <llaveAper> LCampos() <llaveCierre> | <pointer> Tipo()}
-  
+
   void LCampos() : {} {Campo() RLCampos()}
   void RLCampos() : {} {<pyc> Campo() RLCampos() | {}}
 
@@ -103,7 +103,7 @@ PARSER_END(AnalizadorSintacticoTiny)
   void LIns() : {} {Ins() RLIns()}
   void RLIns() : {} {<pyc> Ins() RLIns() | {}}
 
-  void Ins() : {} {E0() <igual> E0() | InsIfThen() RInsIfThen() | <while_pr> E0() <do> LInsV() <endwhile> | <read> E0() | <write> E0() | <nl> | <new_pr> E0() | <delete_pr> E0() | <call> <identificador> <pApert> LParamsReales() <pCierre> | Bloque()}
+  void Ins() : {} {E0() <igual> E0() | InsIfThen() RInsIfThen() | <while_pr> E0() <do_pr> LInsV() <endwhile> | <read> E0() | <write> E0() | <nl> | <new_pr> E0() | <delete> E0() | <call> <identificador> <pApert> LParamsReales() <pCierre> | Bloque()}
 
   void InsIfThen() : {} {<if_pr> E0() <then> LInsV()}
   void RInsIfThen() : {} {<endif> | <else_pr> LInsV() <endif>}
