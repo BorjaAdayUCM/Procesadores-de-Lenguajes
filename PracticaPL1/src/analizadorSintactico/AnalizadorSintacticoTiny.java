@@ -228,7 +228,7 @@ public class AnalizadorSintacticoTiny {
 		case AND:
 		case OR: 
 			OpN1();
-			E3();
+			E2();
 			RE1();
 			break;
 		case PCIERRE:

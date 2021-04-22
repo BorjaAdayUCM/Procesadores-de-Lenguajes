@@ -9,4 +9,4 @@ suelo = false;
 metrosLluvia = 12e4567;
 coche = false;
 pesado = false;
-accidente = (llueve and (metrosLluvia > 13e4567 and suelo and coche and pesado))
+accidente = (llueve and metrosLluvia > 13e4567 and suelo and coche and pesado)
