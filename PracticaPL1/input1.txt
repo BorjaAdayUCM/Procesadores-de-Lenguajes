@@ -1,0 +1,9 @@
+real peso;
+int n1;
+int n2;
+bool pesado
+&&
+n1 = 13;
+n2 = 14;
+peso = (13.0 * 11e-56) / -1.05;
+pesado = (peso > 10.0) or (peso / 2 <= +0.0)
