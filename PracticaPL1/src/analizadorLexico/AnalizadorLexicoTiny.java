@@ -1,4 +1,8 @@
+package analizadorLexico;
 import java.io.Reader;
+
+import errores.GestionErroresTiny;
+
 import java.io.IOException;
 
 public class AnalizadorLexicoTiny {
@@ -11,6 +15,7 @@ public class AnalizadorLexicoTiny {
 	private int filaActual;
 	private int columnaActual;
 	private static String NL = System.getProperty("line.separator");
+	private GestionErroresTiny errores;
 
 	private static enum Estado {
 		INICIO, REC_PARA, REC_PARC, REC_EOF, REC_IDIS, REC_DIS, REC_IGUAL, REC_IGUALDAD, REC_ISEP, REC_SEP,
@@ -21,6 +26,7 @@ public class AnalizadorLexicoTiny {
 	private Estado estado;
 
 	public AnalizadorLexicoTiny(Reader input) throws IOException {
+		this.errores = new GestionErroresTiny();
 		this.input = input;
 		lex = new StringBuffer();
 		sigCar = input.read();
@@ -303,7 +309,12 @@ public class AnalizadorLexicoTiny {
 	}    
 
 	public void error() {
-		System.err.println("Fila: " + this.filaActual + ", Columna: " + this.columnaActual + ", " + "Caracter inexperado.");
-		System.exit(1);
+		this.errores.errorLexico(filaActual, columnaActual, Character.toString((char)sigCar));
 	}
+
+	public void fijaGestionErrores(GestionErroresTiny errores) {
+		this.errores = errores;
+		
+	}
+
 }

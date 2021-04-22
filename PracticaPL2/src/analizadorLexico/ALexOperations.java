@@ -1,3 +1,4 @@
+package analizadorLexico;
 
 public class ALexOperations {
 	private AnalizadorLexicoTiny1 alex;

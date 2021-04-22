@@ -1,5 +1,5 @@
-bool->llueve;
-hola = 32,05;
-bool. suelo;
-&&&
+bool pepe;
+int hola;
+int juan
+&&
 write "Perfecto";

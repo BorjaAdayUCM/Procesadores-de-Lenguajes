@@ -1,3 +1,4 @@
+package analizadorLexico;
 
 public enum ClaseLexica {
  SEPARADOR, PUNTOYCOMA, MAS, MENOS, POR, DIV, IGUAL, MENOR,

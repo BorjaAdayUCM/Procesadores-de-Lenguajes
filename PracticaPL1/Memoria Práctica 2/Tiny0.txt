@@ -1,0 +1,46 @@
+Programa -> PDeclaraciones separador PInstrucciones.
+PDeclaraciones -> LDecs.
+LDecs -> Dec RLDecs.
+RLDecs -> pyc Dec RLDecs.
+RLDecs -> .
+Dec -> Tipo identificador.
+Tipo -> int.
+Tipo -> real.
+Tipo -> bool.
+PInstrucciones -> LIns.
+LIns -> Ins RLIns.
+RLIns -> pyc Ins RLIns.
+RLIns -> .
+Ins -> identificador igual E0.
+E0 -> E1 RE0.
+RE0 -> mas E0.
+RE0 -> menos E1.
+RE0 -> .
+E1 -> E2 RE1.
+RE1 -> OpN1 E2 RE1.
+RE1 -> .
+E2 -> E3 RE2.
+RE2 -> OpN2 E3 RE2.
+RE2 -> .
+E3 -> E4 RE3.
+RE3 -> OpN3 E4.
+RE3 -> .
+E4 -> menos E5.
+E4 -> not E4.
+E4 -> E5.
+E5 -> identificador.
+E5 -> numEnt.
+E5 -> numReal.
+E5 -> true.
+E5 -> false.
+E5 -> pap E0 pcie.
+OpN1 -> and.
+OpN1 -> or.
+OpN2 -> menor.
+OpN2 -> mayor.
+OpN2 -> menorigual.
+OpN2 -> mayorigual.
+OpN2 -> igualdad.
+OpN2 -> distinto.
+OpN3 -> por.
+OpN3 -> div.

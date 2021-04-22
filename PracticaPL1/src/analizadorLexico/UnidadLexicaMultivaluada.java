@@ -1,3 +1,4 @@
+package analizadorLexico;
 
 
 public class UnidadLexicaMultivaluada extends UnidadLexica {
