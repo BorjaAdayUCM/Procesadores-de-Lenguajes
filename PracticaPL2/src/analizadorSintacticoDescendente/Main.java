@@ -1,4 +1,4 @@
-package analizadorSintactico;
+package analizadorSintacticoDescendente;
 
 import java.io.FileReader;
 public class Main{
