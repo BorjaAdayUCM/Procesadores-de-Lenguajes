@@ -26,7 +26,6 @@ public class AnalizadorLexicoTiny {
 	private Estado estado;
 
 	public AnalizadorLexicoTiny(Reader input) throws IOException {
-		this.errores = new GestionErroresTiny();
 		this.input = input;
 		lex = new StringBuffer();
 		sigCar = input.read();

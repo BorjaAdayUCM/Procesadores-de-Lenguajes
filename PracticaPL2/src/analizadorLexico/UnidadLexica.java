@@ -1,16 +1,17 @@
 package analizadorLexico;
 
+import java_cup.runtime.Symbol;
 
-public abstract class UnidadLexica {
-   private ClaseLexica clase;
+public abstract class UnidadLexica extends Symbol {
    private int fila;
    private int columna;
-   public UnidadLexica(int fila, int columna, ClaseLexica clase) {
-     this.fila = fila;
-     this.columna = columna;
-     this.clase = clase;
+   
+   public UnidadLexica(int fila, int columna, int clase, String lexema) {
+	   super(clase, lexema);
+	   this.fila = fila;
+	   this.columna = columna;
    }
-   public ClaseLexica clase () {return clase;}
+   public int clase () {return sym;}
    public abstract String lexema();
    public int fila() {return fila;}
    public int columna() {return columna;}

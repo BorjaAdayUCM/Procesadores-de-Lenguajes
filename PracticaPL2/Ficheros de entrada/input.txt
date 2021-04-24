@@ -1,4 +1,4 @@
-type pointer tNodo tArbol;
+type pointer tNodo tAñrbol;
 type record {
  string nombre;
  tArbol izq;

@@ -1,0 +1,66 @@
+package analizadorSintacticoAscendente;
+
+import java_cup.runtime.*;
+import analizadorLexico.AnalizadorLexicoTiny1;
+import analizadorLexico.UnidadLexica;
+import errores.GestionErroresTiny1;
+
+scan with {: return getScanner().next_token(); :};
+parser code {: 
+   private GestionErroresTiny1 errores;
+   public void syntax_error(Symbol unidadLexica) {
+     errores.errorSintactico((UnidadLexica)unidadLexica);
+   }
+:};
+init with {: 
+   errores = new GestionErroresTiny1();
+   AnalizadorLexicoTiny1 analizadorLexico = (AnalizadorLexicoTiny1)getScanner();
+   analizadorLexico.fijaGestionErrores(errores);
+:};
+
+
+terminal     IDEN, NUMENT, NUMREAL, CADENA, MAS, MENOS, POR, DIV,
+             SEP, MOD, MENOR, MAYOR, MENORIGUAL, MAYORIGUAL, IGUALDAD,
+             IGUAL, DISTINTO, PAPER, PCIERRE, PYC, CORAPER, CORCIERRE,
+             LLAVEAPER, LLAVECIERRE, PUNTO, COMA, FLECHA, AMPERSAND, INT,
+             REAL, BOOL, STRING, AND, OR, NOT, NULL, TRUE, FALSE, PROC,
+             IF, THEN, ELSE, ENDIF, WHILE, DO, ENDWHILE, CALL, RECORD,
+             ARRAY, OF, POINTER, NEW , DELETE, READ, WRITE, NL, VAR, TYPE;
+
+non terminal  Sp, Programa, PDeclaraciones, LDecs, Dec,
+              ParForm, LParams, Param, Referencia, Bloque,
+              Tipo, LCampos, Campo, PInstrucciones,
+              LIns, Ins, LInsV, LParamsReales, E0, E1, E2,
+              E3, E4, E5, E6, E7, OpN1, OpN2, OpN3, OpN5;
+
+Sp              ::= Programa ;
+Programa        ::= PDeclaraciones PInstrucciones ;
+PDeclaraciones  ::= LDecs SEP | ;
+LDecs           ::= LDecs PYC Dec | Dec ;
+Dec             ::= VAR Tipo IDEN| TYPE Tipo IDEN | PROC IDEN ParForm Bloque;
+ParForm         ::= PAPER LParams PCIERRE ;
+LParams         ::= LParams COMA Param | Param |  ;
+Param           ::= Tipo Referencia IDEN ;
+Referencia      ::= AMPERSAND | ;
+Bloque          ::= LLAVEAPER Programa LLAVECIERRE ;
+Tipo            ::= INT | REAL | BOOL | STRING | IDEN | ARRAY CORAPER NUMENT CORCIERRE OF Tipo | RECORD LLAVEAPER LCampos LLAVECIERRE | POINTER Tipo ;
+LCampos         ::= LCampos PYC Campo | Campo ;
+Campo           ::= Tipo IDEN ;
+PInstrucciones  ::= LIns ;
+LIns            ::= LIns PYC Ins | Ins ;
+Ins             ::= E0 IGUAL E0 | IF E0 THEN LInsV ENDIF | IF E0 THEN LInsV ELSE LInsV ENDIF | WHILE E0 DO LInsV ENDWHILE | READ E0 | WRITE E0 | NL | NEW E0 | DELETE E0 | CALL IDEN PAPER LParamsReales PCIERRE | Bloque;
+LInsV           ::= LInsV PYC Ins | Ins | ;
+LParamsReales   ::= LParamsReales COMA E0 | E0 | ;
+E0              ::= E1 MAS E0 | E1 MENOS E1 | E1 ;
+E1              ::= E1 OpN1 E2 | E2 ;
+E2              ::= E2 OpN2 E3 | E3 ;
+E3              ::= E4 OpN3 E4 | E4 ;
+E4              ::= MENOS E5 | NOT E4 | E5;
+E5              ::= E5 OpN5 | E6 ;
+E6              ::= POR E6 | E7 ;
+E7              ::= IDEN | NUMENT | NUMREAL | CADENA | TRUE | FALSE | NULL | PAPER E0 PCIERRE ;
+OpN1            ::= AND | OR ;
+OpN2            ::= MENOR | MAYOR | MENORIGUAL | MAYORIGUAL | IGUALDAD | DISTINTO ;
+OpN3            ::= POR | DIV | MOD ;
+OpN5            ::= CORAPER E0 CORCIERRE | PUNTO IDEN | FLECHA IDEN ;
+

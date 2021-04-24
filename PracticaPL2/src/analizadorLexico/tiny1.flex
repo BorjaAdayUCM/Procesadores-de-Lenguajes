@@ -1,9 +1,12 @@
+package analizadorLexico;
+
 %%
+%cup
 %line
 %column
 %class AnalizadorLexicoTiny1
-%type  UnidadLexica
 %unicode
+%public
 
 %{
   private ALexOperations ops;

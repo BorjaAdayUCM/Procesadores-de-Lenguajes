@@ -1,5 +1,7 @@
 package analizadorLexico;
 
+import analizadorSintacticoAscendente.ClaseLexica;
+
 public class ALexOperations {
 	private AnalizadorLexicoTiny1 alex;
 
@@ -244,6 +246,6 @@ public class ALexOperations {
 	}
 
 	public void error() {
-		System.err.println("Fila: " + alex.fila() + ", Columna: " + alex.columna() + ", " + "Caracter inexperado:" + alex.lexema());
+		this.alex.getErrores().errorLexico(alex.fila(), alex.lexema());
 	}
 }
