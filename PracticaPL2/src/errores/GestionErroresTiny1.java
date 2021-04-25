@@ -8,7 +8,7 @@ public class GestionErroresTiny1 {
      System.exit(1);
    }  
    public void errorSintactico(UnidadLexica unidadLexica) {
-     System.out.println("ERROR SINTACTICO, fila "+unidadLexica.fila()+", columna "+unidadLexica.columna()+" : Elemento inexperado "+unidadLexica.value);
+     System.out.println("ERROR SINTACTICO, fila "+unidadLexica.fila()+", columna "+unidadLexica.columna()+" : Elemento inexperado "+ unidadLexica.value);
      System.exit(1);
    }
 }

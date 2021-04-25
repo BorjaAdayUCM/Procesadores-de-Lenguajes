@@ -343,6 +343,7 @@ public class AnalizadorSintacticoTiny {
 		case NOT: 
 			empareja(ClaseLexica.NOT);
 			E4();
+			break;
 		case VARIABLE: 
 		case ENT: 
 		case NUMREAL: 
@@ -363,9 +364,8 @@ public class AnalizadorSintacticoTiny {
 		case VARIABLE: 
 			empareja(ClaseLexica.VARIABLE); 
 			break;
-		case 
-		ENT: empareja(ClaseLexica.ENT); 
-		break;
+		case ENT: empareja(ClaseLexica.ENT); 
+			break;
 		case NUMREAL: 
 			empareja(ClaseLexica.NUMREAL); 
 			break;
