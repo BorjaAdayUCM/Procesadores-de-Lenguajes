@@ -1,0 +1,45 @@
+var bool continua;
+var bool vivo;
+var int n;
+var int hp;
+var array [10] of bool vidas;
+
+type record{
+ int hpCabeza;
+ int hpTorso;
+ int hpPiernas
+}cuerpo;
+
+proc printVida(){
+    if vivo then
+        write hp; nl;
+        write "hp cabeza: "; write cuerpo->hpCabeza; nl;
+        write "hp Torso: "; write cuerpo->hpTorso; nl;
+        write "hp Piernas: "; write cuerpo->hpPiernas; nl
+    else write "Este muerto esta muy muerto"; nl
+    endif;
+    nl
+}
+&&
+
+contin?a = false;
+vivo = true;
+
+n = 3;
+hp = 100;
+
+i = 0;
+while i < 10 do
+    vidas[i] = true
+endwhile;
+
+while continua != true do
+    hp = hp - 10;
+    if vidas[hp mod 10] == false then
+        call printVida();
+    else
+        read m;
+	write m; nl;
+        write "Vida perdida"
+    endif
+endwhile

@@ -1,5 +1,0 @@
-bool pepe;
-int hola;
-int juan
-&&
-write "Perfecto";

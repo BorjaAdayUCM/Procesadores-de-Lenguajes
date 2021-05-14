@@ -83,7 +83,7 @@ public class AnalizadorSintacticoTiny {
 		case SEPARADOR:
 			break;
 		default:
-			errores.errorSintactico(anticipo.fila(), anticipo.columna(), anticipo.clase(), ClaseLexica.PUNTOYCOMA, ClaseLexica.SEPARADOR); //ERRORES
+			errores.errorSintactico(anticipo.fila(), anticipo.columna(), anticipo.clase(), ClaseLexica.PUNTOYCOMA, ClaseLexica.SEPARADOR);
 		}
 	}
 
@@ -148,7 +148,7 @@ public class AnalizadorSintacticoTiny {
 			break;
 		case EOF: break;
 		default:
-			errores.errorSintactico(anticipo.fila(), anticipo.columna(), anticipo.clase(), ClaseLexica.PUNTOYCOMA); //ERRORES
+			errores.errorSintactico(anticipo.fila(), anticipo.columna(), anticipo.clase(), ClaseLexica.PUNTOYCOMA, ClaseLexica.EOF);
 		}
 	}
 
@@ -199,7 +199,7 @@ public class AnalizadorSintacticoTiny {
 		case EOF: break;
 		default:
 			errores.errorSintactico(anticipo.fila(), anticipo.columna(), anticipo.clase(), ClaseLexica.MENOS, 
-					ClaseLexica.MAS); //ERRORES
+					ClaseLexica.MAS);
 		}
 	}
 
@@ -238,7 +238,7 @@ public class AnalizadorSintacticoTiny {
 		case EOF: break;
 		default:
 			errores.errorSintactico(anticipo.fila(), anticipo.columna(), anticipo.clase(), ClaseLexica.AND, 
-					ClaseLexica.OR); //ERRORES
+					ClaseLexica.OR, ClaseLexica.MAS, ClaseLexica.MENOS);
 		}
 	}
 
@@ -282,8 +282,8 @@ public class AnalizadorSintacticoTiny {
 		case PUNTOYCOMA:
 		case EOF: break;
 		default:
-			errores.errorSintactico(anticipo.fila(), anticipo.columna(), anticipo.clase(), ClaseLexica.AND, 
-					ClaseLexica.OR); //ERRORES
+			errores.errorSintactico(anticipo.fila(), anticipo.columna(), anticipo.clase(), ClaseLexica.MENOR, ClaseLexica.MAYOR, ClaseLexica.MENORIGUAL, 
+					ClaseLexica.MAYORIGUAL, ClaseLexica.IGUALDAD, ClaseLexica.DISTINTO,ClaseLexica.AND, ClaseLexica.OR, ClaseLexica.MAS, ClaseLexica.MENOS);
 		}
 	}
 
@@ -330,7 +330,8 @@ public class AnalizadorSintacticoTiny {
 			break;
 		default:
 			errores.errorSintactico(anticipo.fila(), anticipo.columna(), anticipo.clase(), ClaseLexica.POR, 
-					ClaseLexica.DIV); //ERRORES
+					ClaseLexica.DIV, ClaseLexica.MENOR, ClaseLexica.MAYOR, ClaseLexica.MENORIGUAL, ClaseLexica.MAYORIGUAL,
+					ClaseLexica.IGUALDAD, ClaseLexica.DISTINTO, ClaseLexica.AND, ClaseLexica.OR, ClaseLexica.MAS, ClaseLexica.MENOS);
 		}
 	}
 
@@ -414,7 +415,7 @@ public class AnalizadorSintacticoTiny {
 			empareja(ClaseLexica.MAYORIGUAL); 
 			break;
 		case IGUALDAD: 
-			empareja(ClaseLexica.IGUALDAD); 
+			empareja(ClaseLexica.IGUALDAD);
 			break;
 		case DISTINTO: 
 			empareja(ClaseLexica.DISTINTO); 

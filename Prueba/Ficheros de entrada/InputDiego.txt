@@ -41,7 +41,7 @@ nonada(int & nada1, int nada2){
 write "Bienvenido a mi humilde morada"; nl;
 i = 10;
 while i > 0 do
-    call nada(+3,-0.0e45);
+    call nada(3,5);
     write "Estoy esperando sin hacer nada"; nl;
     i = i-(1)
 endwhile;

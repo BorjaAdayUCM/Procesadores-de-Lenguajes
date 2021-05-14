@@ -440,7 +440,7 @@ public class AnalizadorSintacticoTiny1Ascendente extends java_cup.runtime.lr_par
   public java_cup.runtime.Symbol do_action(
     int                        act_num,
     java_cup.runtime.lr_parser parser,
-    java.util.Stack            stack,
+    @SuppressWarnings("rawtypes") java.util.Stack            stack,
     int                        top)
     throws java.lang.Exception
   {
@@ -498,7 +498,7 @@ class CUP$AnalizadorSintacticoTiny1Ascendente$actions {
   public final java_cup.runtime.Symbol CUP$AnalizadorSintacticoTiny1Ascendente$do_action_part00000000(
     int                        CUP$AnalizadorSintacticoTiny1Ascendente$act_num,
     java_cup.runtime.lr_parser CUP$AnalizadorSintacticoTiny1Ascendente$parser,
-    java.util.Stack            CUP$AnalizadorSintacticoTiny1Ascendente$stack,
+    @SuppressWarnings("rawtypes") java.util.Stack            CUP$AnalizadorSintacticoTiny1Ascendente$stack,
     int                        CUP$AnalizadorSintacticoTiny1Ascendente$top)
     throws java.lang.Exception
     {
@@ -1315,7 +1315,7 @@ class CUP$AnalizadorSintacticoTiny1Ascendente$actions {
   public final java_cup.runtime.Symbol CUP$AnalizadorSintacticoTiny1Ascendente$do_action(
     int                        CUP$AnalizadorSintacticoTiny1Ascendente$act_num,
     java_cup.runtime.lr_parser CUP$AnalizadorSintacticoTiny1Ascendente$parser,
-    java.util.Stack            CUP$AnalizadorSintacticoTiny1Ascendente$stack,
+    @SuppressWarnings("rawtypes") java.util.Stack            CUP$AnalizadorSintacticoTiny1Ascendente$stack,
     int                        CUP$AnalizadorSintacticoTiny1Ascendente$top)
     throws java.lang.Exception
     {
