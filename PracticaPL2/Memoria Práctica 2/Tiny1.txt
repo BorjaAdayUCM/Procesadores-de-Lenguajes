@@ -1,0 +1,124 @@
+Programa -> PDeclaraciones PInstrucciones.
+PDeclaraciones -> LDecs separador.
+PDeclaraciones -> .
+
+LDecs -> Dec RLDecs.
+RLDecs -> pyc Dec RLDecs.
+RLDecs -> .
+
+Dec -> var Tipo identificador.
+Dec -> type Tipo identificador.
+Dec -> proc identificador ParForm Bloque.
+ParForm -> pap LParams pcie.
+
+LParams -> Param RLParams.
+RLParams -> coma Param RLParams.
+RLParams -> .
+LParams -> .
+
+Param -> Tipo Referencia identificador.
+Referencia -> ampersand.
+Referencia -> .
+Bloque -> llaveap RBloque.
+RBloque -> Programa llavecie.
+RBloque -> llavecie.
+Tipo -> int.
+Tipo -> real.
+Tipo -> bool.
+Tipo -> string.
+Tipo -> identificador.
+Tipo -> array corap numEnt corcie of Tipo.
+Tipo -> record llaveap LCampos llavecie.
+
+LCampos -> Campo RLCampos.
+RLCampos -> pyc Campo RLCampos.
+RLCampos -> .
+
+Campo -> Tipo identificador.
+Tipo -> pointer Tipo.
+
+PInstrucciones -> LIns.
+
+LIns -> Ins RLIns.
+RLIns -> pyc Ins RLIns.
+RLIns -> .
+
+Ins -> E0 igual E0.
+
+Ins -> InsIfThen RInsIfThen.
+InsIfThen -> if E0 then LInsV .
+RInsIfThen -> endif.
+RInsIfThen -> else LInsV endif.
+
+Ins -> while E0 do LInsV endwhile.
+
+LInsV -> Ins RLInsV.
+RLInsV -> pyc Ins RLInsV.
+RLInsV -> .
+LInsV -> .
+
+Ins -> read E0.
+Ins -> write E0.
+Ins -> nl.
+Ins -> new E0.
+Ins -> delete E0.
+Ins -> call identificador pap LParamsReales pcie.
+
+LParamsReales -> E0 RLParamsReales.
+RLParamsReales -> coma E0 RLParamsReales.
+RLParamsReales -> .
+LParamsReales -> .
+
+Ins -> Bloque.
+
+E0 -> E1 RE0.
+RE0 -> mas E0.
+RE0 -> menos E1.
+RE0 -> .
+
+E1 -> E2 RE1.
+RE1 -> OpN1 E2 RE1.
+RE1 -> .
+
+E2 -> E3 RE2.
+RE2 -> OpN2 E3 RE2.
+RE2 -> .
+
+E3 -> E4 RE3.
+RE3 -> OpN3 E4.
+RE3 -> .
+
+E4 -> menos E5.
+E4 -> not E4.
+E4 -> E5.
+
+E5 -> E6 RE5.
+RE5 -> OpN5 RE5.
+RE5 -> .
+
+E6 -> por E6.
+E6 -> E7.
+
+E7 -> identificador.
+E7 -> numEnt.
+E7 -> numReal.
+E7 -> true.
+E7 -> false.
+E7 -> cadena.
+E7 -> null.
+E7 -> pap E0 pcie.
+
+OpN1 -> and.
+OpN1 -> or.
+OpN2 -> menor.
+OpN2 -> mayor.
+OpN2 -> menorigual.
+OpN2 -> mayorigual.
+OpN2 -> igualdad.
+OpN2 -> distinto.
+OpN3 -> por.
+OpN3 -> div.
+OpN3 -> mod.
+OpN5 -> corap E0 corcie.
+OpN5 -> punto identificador.
+OpN5 -> flecha identificador.
