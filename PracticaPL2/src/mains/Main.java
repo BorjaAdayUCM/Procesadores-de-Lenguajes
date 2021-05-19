@@ -5,9 +5,9 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import analizadorLexico.AnalizadorLexicoTiny1;
-import analizadorSintacticoAscendente.AnalizadorSintacticoTiny1Ascendente;
-import analizadorSintacticoDescendente.AnalizadorSintacticoTiny1Descendente;
+import analizadorSintactico.AnalizadorSintacticoTiny1;
+import constructorAST_ascendente.AnalizadorLexicoTiny1;
+import constructorAST_descendente.AnalizadorSintacticoTiny1Descendente;
 
 public class Main {
 
@@ -20,7 +20,7 @@ public class Main {
 			else if (args[1].equals("asc")){
 				Reader input = new InputStreamReader(new FileInputStream(args[0]));
 				 AnalizadorLexicoTiny1 alex = new AnalizadorLexicoTiny1(input);
-				 AnalizadorSintacticoTiny1Ascendente asint = new AnalizadorSintacticoTiny1Ascendente(alex);
+				 AnalizadorSintacticoTiny1 asint = new AnalizadorSintacticoTiny1(alex);
 				 asint.parse();
 			}
 			System.out.println("OK");

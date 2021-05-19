@@ -1,6 +1,6 @@
 package errores;
 
-import analizadorLexico.UnidadLexica;
+import constructorAST_ascendente.UnidadLexica;
 
 public class GestionErroresTiny1 {
 	
