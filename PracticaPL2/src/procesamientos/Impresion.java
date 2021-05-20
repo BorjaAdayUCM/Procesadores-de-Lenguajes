@@ -211,8 +211,13 @@ public class Impresion extends ProcesamientoPorDefecto {
 		System.out.print("proc " + decProc.id() +  "(");
 		if(decProc.lparams() != null) decProc.lparams().procesa(this);
 		System.out.println(") {");
-		decProc.bloque().programa().procesa(this);
-		System.out.print("\n}");
+		if(decProc.bloque().programa() != null) {
+			decProc.bloque().programa().procesa(this);
+			System.out.print("\n}");
+		} else {
+			System.out.print("}");
+		}
+		
 	}
 
 	public void procesa(LDecs_1 lDecs_1) {
@@ -277,7 +282,7 @@ public class Impresion extends ProcesamientoPorDefecto {
 
 	public void procesa(InsBloque insBloque) {
 		System.out.println("{");
-		insBloque.bloque().programa().procesa(this);
+		if(insBloque.bloque().programa() != null) insBloque.bloque().programa().procesa(this);
 		System.out.print("\n}");
 	}
 
