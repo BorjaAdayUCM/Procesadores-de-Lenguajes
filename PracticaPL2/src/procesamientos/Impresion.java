@@ -69,155 +69,200 @@ import analizadorSintactico.AnalizadorSintacticoTiny1.True;
 
 public class Impresion extends ProcesamientoPorDefecto {
 
+	private String programa;
+
+	public Impresion() {
+		this.programa = new String();
+	}
+
+	public String getPrograma() {
+		return this.programa;
+	}
+
 	public void procesa(InsCall insCall) {
-		System.out.print("call " + insCall.id() + "(");
-		if(insCall.lparamsreales() != null) insCall.lparamsreales().procesa(this);
-		System.out.print(")");
+
+		this.programa += "call " + insCall.id() + "(";
+		if (insCall.lparamsreales() != null)
+			insCall.lparamsreales().procesa(this);
+
+		this.programa += ")";
 	}
 
 	public void procesa(Suma suma) {
 		imprime_arg(suma.arg0(), 1);
-		System.out.print(" + ");
+
+		this.programa += " + ";
 		imprime_arg(suma.arg1(), 0);
 	}
 
 	public void procesa(Resta resta) {
 		imprime_arg(resta.arg0(), 1);
-		System.out.print(" - ");
+
+		this.programa += " - ";
 		imprime_arg(resta.arg1(), 1);
 	}
 
 	public void procesa(And and) {
 		imprime_arg(and.arg0(), 1);
-		System.out.print(" and ");
+
+		this.programa += " and ";
 		imprime_arg(and.arg1(), 2);
 	}
 
 	public void procesa(Or or) {
 		imprime_arg(or.arg0(), 1);
-		System.out.print(" or ");
+
+		this.programa += " or ";
 		imprime_arg(or.arg1(), 2);
 	}
 
 	public void procesa(Menor menor) {
 		imprime_arg(menor.arg0(), 2);
-		System.out.print(" < ");
+
+		this.programa += " < ";
 		imprime_arg(menor.arg1(), 3);
 	}
 
 	public void procesa(Mayor mayor) {
 		imprime_arg(mayor.arg0(), 2);
-		System.out.print(" > ");
+
+		this.programa += " > ";
 		imprime_arg(mayor.arg1(), 3);
 	}
 
 	public void procesa(Menor_igual menor_igual) {
 		imprime_arg(menor_igual.arg0(), 2);
-		System.out.print(" <= ");
+
+		this.programa += " <= ";
 		imprime_arg(menor_igual.arg1(), 3);
 	}
 
 	public void procesa(Mayor_igual mayor_igual) {
 		imprime_arg(mayor_igual.arg0(), 2);
-		System.out.print(" >= ");
+
+		this.programa += " >= ";
 		imprime_arg(mayor_igual.arg1(), 3);
 	}
 
 	public void procesa(Igualdad igualdad) {
 		imprime_arg(igualdad.arg0(), 2);
-		System.out.print(" == ");
+
+		this.programa += " == ";
 		imprime_arg(igualdad.arg1(), 3);
 	}
 
 	public void procesa(Distinto distinto) {
 		imprime_arg(distinto.arg0(), 2);
-		System.out.print(" != ");
+
+		this.programa += " != ";
 		imprime_arg(distinto.arg1(), 3);
 	}
 
 	public void procesa(Mul mul) {
 		imprime_arg(mul.arg0(), 4);
-		System.out.print(" * ");
+
+		this.programa += " * ";
 		imprime_arg(mul.arg1(), 4);
 	}
 
 	public void procesa(Div div) {
 		imprime_arg(div.arg0(), 4);
-		System.out.print(" / ");
+
+		this.programa += " / ";
 		imprime_arg(div.arg1(), 4);
 	}
 
 	public void procesa(Mod mod) {
 		imprime_arg(mod.arg0(), 4);
-		System.out.print(" % ");
+
+		this.programa += " % ";
 		imprime_arg(mod.arg1(), 4);
 	}
 
 	public void procesa(Menos menos) {
-		System.out.print("-");
+
+		this.programa += "-";
 		imprime_arg(menos.arg0(), 5);
 	}
 
 	public void procesa(Not not) {
-		System.out.print("not ");
+
+		this.programa += "not ";
 		imprime_arg(not.arg0(), 4);
 	}
 
 	public void procesa(NumEnt numEnt) {
-		System.out.print(numEnt.num());
+
+		this.programa += numEnt.num();
 	}
 
 	public void procesa(NumReal numReal) {
-		System.out.print(numReal.num());
+
+		this.programa += numReal.num();
 	}
 
 	public void procesa(Identificador identificador) {
-		System.out.print(identificador.id());
+
+		this.programa += identificador.id();
 	}
 
 	public void procesa(True true1) {
-		System.out.print(true1.lexema());
+
+		this.programa += true1.lexema();
 	}
 
 	public void procesa(False false1) {
-		System.out.print(false1.lexema());
+
+		this.programa += false1.lexema();
 	}
 
 	public void procesa(Tipo_int tipo_int) {
-		System.out.print(tipo_int.lexema() + " ");
+
+		this.programa += tipo_int.lexema() + " ";
 	}
 
 	public void procesa(Tipo_bool tipo_bool) {
-		System.out.print(tipo_bool.lexema() + " ");
+
+		this.programa += tipo_bool.lexema() + " ";
 	}
 
 	public void procesa(Tipo_real tipo_real) {
-		System.out.print(tipo_real.lexema() + " ");
+
+		this.programa += tipo_real.lexema() + " ";
 	}
 
 	public void procesa(DecVar decVar) {
-		System.out.print("var ");
+
+		this.programa += "var ";
 		decVar.tipo().procesa(this);
-		System.out.print(decVar.id());
+
+		this.programa += decVar.id();
 	}
 
 	public void procesa(DecType decType) {
-		System.out.print("type ");
+
+		this.programa += "type ";
 		decType.tipo().procesa(this);
-		System.out.print(decType.id());
+
+		this.programa += decType.id();
 	}
 
 	public void procesa(DecProc decProc) {
-		System.out.print("proc " + decProc.id() +  "(");
-		if(decProc.lparams() != null) decProc.lparams().procesa(this);
-		System.out.println(") {");
-		if(decProc.bloque().programa() != null) {
+
+		this.programa += "proc " + decProc.id() + "(";
+		if (decProc.lparams() != null)
+			decProc.lparams().procesa(this);
+
+		this.programa += ") {\n";
+		if (decProc.bloque().programa() != null) {
 			decProc.bloque().programa().procesa(this);
-			System.out.print("\n}");
+
+			this.programa += "\n}";
 		} else {
-			System.out.print("}");
+
+			this.programa += "}";
 		}
-		
+
 	}
 
 	public void procesa(LDecs_1 lDecs_1) {
@@ -226,7 +271,8 @@ public class Impresion extends ProcesamientoPorDefecto {
 
 	public void procesa(LDecs_muchas lDecs_muchas) {
 		lDecs_muchas.ldecs().procesa(this);
-		System.out.print(";\n");
+
+		this.programa += ";\n";
 		lDecs_muchas.dec().procesa(this);
 	}
 
@@ -236,7 +282,8 @@ public class Impresion extends ProcesamientoPorDefecto {
 
 	public void procesa(LIns_muchas lIns_muchas) {
 		lIns_muchas.lins().procesa(this);
-		System.out.print(";\n");
+
+		this.programa += ";\n";
 		lIns_muchas.ins().procesa(this);
 	}
 
@@ -246,70 +293,90 @@ public class Impresion extends ProcesamientoPorDefecto {
 
 	public void procesa(LInsV_muchas lInsV_muchas) {
 		lInsV_muchas.linsv().procesa(this);
-		System.out.print(";\n");
+
+		this.programa += ";\n";
 		lInsV_muchas.ins().procesa(this);
 	}
 
 	public void procesa(InsAsignacion insAsignacion) {
 		insAsignacion.exp1().procesa(this);
-		System.out.print(" = ");
+
+		this.programa += " = ";
 		insAsignacion.exp2().procesa(this);
 	}
 
 	public void procesa(InsRead insRead) {
-		System.out.print("read ");
+
+		this.programa += "read ";
 		insRead.exp1().procesa(this);
 	}
 
 	public void procesa(InsWrite insWrite) {
-		System.out.print("write ");
+
+		this.programa += "write ";
 		insWrite.exp1().procesa(this);
 	}
 
 	public void procesa(InsNew insNew) {
-		System.out.print("new ");
+
+		this.programa += "new ";
 		insNew.exp1().procesa(this);
 	}
 
 	public void procesa(InsDelete insDelete) {
-		System.out.print("delete ");
+
+		this.programa += "delete ";
 		insDelete.exp1().procesa(this);
 	}
 
 	public void procesa(InsNL insNL) {
-		System.out.print(insNL.lexema());
+
+		this.programa += insNL.lexema();
 	}
 
 	public void procesa(InsBloque insBloque) {
-		System.out.println("{");
-		if(insBloque.bloque().programa() != null) insBloque.bloque().programa().procesa(this);
-		System.out.print("\n}");
+
+		this.programa += "{\n";
+		if (insBloque.bloque().programa() != null)
+			insBloque.bloque().programa().procesa(this);
+
+		this.programa += "\n}";
 	}
 
 	public void procesa(InsIf insIf) {
-		System.out.print("if ");
+
+		this.programa += "if ";
 		insIf.exp1().procesa(this);
-		System.out.println(" then");
+
+		this.programa += " then\n";
 		insIf.linsv().procesa(this);
-		System.out.print("\nendif");
+
+		this.programa += "\nendif";
 	}
 
 	public void procesa(InsIfElse insIfElse) {
-		System.out.print("if ");
+
+		this.programa += "if ";
 		insIfElse.exp1().procesa(this);
-		System.out.println(" then");
+
+		this.programa += " then\n";
 		insIfElse.linsv1().procesa(this);
-		System.out.println("\nelse");
+
+		this.programa += "\nelse\n";
 		insIfElse.linsv2().procesa(this);
-		System.out.print("\nendif");
+
+		this.programa += "\nendif";
 	}
 
 	public void procesa(InsWhile insWhile) {
-		System.out.print("while ");
+
+		this.programa += "while ";
 		insWhile.exp1().procesa(this);
-		System.out.println(" do");
+
+		this.programa += " do\n";
 		insWhile.linsv().procesa(this);
-		System.out.print("\nendwhile");
+
+		this.programa += "\nendwhile";
 	}
 
 	public void procesa(LParams_1 lParams_1) {
@@ -318,14 +385,17 @@ public class Impresion extends ProcesamientoPorDefecto {
 
 	public void procesa(LParams_muchos lParams_muchos) {
 		lParams_muchos.lparams().procesa(this);
-		System.out.print(", ");
+
+		this.programa += ", ";
 		lParams_muchos.param().procesa(this);
 	}
 
 	public void procesa(Param param) {
 		param.tipo().procesa(this);
-		if(param.ref() != null) param.ref().procesa(this);
-		System.out.print(param.id());
+		if (param.ref() != null)
+			param.ref().procesa(this);
+
+		this.programa += param.id();
 	}
 
 	public void procesa(LParamsReales_1 lParamsReales_1) {
@@ -334,78 +404,92 @@ public class Impresion extends ProcesamientoPorDefecto {
 
 	public void procesa(LParamsReales_muchos lParamsReales_muchos) {
 		lParamsReales_muchos.lparamsreales().procesa(this);
-		System.out.print(", ");
+
+		this.programa += ", ";
 		lParamsReales_muchos.exp1().procesa(this);
 	}
 
 	public void procesa(Referencia referencia) {
-		if (referencia != null) System.out.print("& ");
+		if (referencia != null) {
+
+			this.programa += "& ";
+		}
 	}
 
 	public void procesa(Programa programa) {
 		if (programa.ldecs() == null) {
 			programa.lins().procesa(this);
-		}
-		else {
+		} else {
 			programa.ldecs().procesa(this);
-			System.out.println("\n&&");
+
+			this.programa += "\n&&\n";
 			programa.lins().procesa(this);
 		}
 	}
 
 	public void procesa(Index index) {
 		index.exp1().procesa(this);
-		System.out.print("[");
+
+		this.programa += "[";
 		index.exp2().procesa(this);
-		System.out.print("]");
+
+		this.programa += "]";
 	}
 
 	public void procesa(AccessRegPunto accessRegPunto) {
 		accessRegPunto.exp1().procesa(this);
-		System.out.print(".");
-		System.out.print(accessRegPunto.id());
+
+		this.programa += "." + accessRegPunto.id();
 	}
 
 	public void procesa(AccessRegFlecha accessRegFlecha) {
 		accessRegFlecha.exp1().procesa(this);
-		System.out.print("->");
-		System.out.print(accessRegFlecha.id());
+
+		this.programa += "->" + accessRegFlecha.id();
 	}
 
 	public void procesa(Indireccion indireccion) {
-		System.out.print("*");
+
+		this.programa += "*";
 		indireccion.exp1().procesa(this);
 	}
 
 	public void procesa(Cadena cadena) {
-		System.out.print(cadena.cadena());
+
+		this.programa += cadena.cadena();
 	}
 
 	public void procesa(Null null1) {
-		System.out.print(null1.lexema());
+
+		this.programa += null1.lexema();
 	}
 
 	public void procesa(Tipo_string tipo_string) {
-		System.out.print(tipo_string.lexema() + " ");
+
+		this.programa += tipo_string.lexema() + " ";
 	}
 
 	public void procesa(Tipo_id tipo_id) {
-		System.out.print(tipo_id.id() + " ");
+
+		this.programa += tipo_id.id() + " ";
 	}
 
 	public void procesa(Tipo_array tipo_array) {
-		System.out.print("array [" + tipo_array.id() + "] of ");
+
+		this.programa += "array [" + tipo_array.id() + "] of ";
 		tipo_array.tipo().procesa(this);
 	}
 
 	public void procesa(Tipo_pointer tipo_pointer) {
-		System.out.print("pointer ");
+
+		this.programa += "pointer ";
 		tipo_pointer.tipo().procesa(this);
 	}
 
 	public void procesa(Campo campo) {
 		campo.tipo().procesa(this);
-		System.out.print(campo.id());
+
+		this.programa += campo.id();
 	}
 
 	public void procesa(LCampos_1 lCampos_1) {
@@ -414,24 +498,28 @@ public class Impresion extends ProcesamientoPorDefecto {
 
 	public void procesa(LCampos_muchos lCampos_muchos) {
 		lCampos_muchos.lcampos().procesa(this);
-		System.out.println(";");
+
+		this.programa += ";\n";
 		lCampos_muchos.campo().procesa(this);
 	}
 
 	public void procesa(Tipo_record tipo_record) {
-		System.out.println("record {");
+
+		this.programa += "record {\n";
 		tipo_record.lcampos().procesa(this);
-		System.out.print("\n} ");
+
+		this.programa += "\n} ";
 	}
-	
+
 	private void imprime_arg(Exp arg, int p) {
-	       if (arg.prioridad() < p) {
-	           System.out.print("(");
-	           arg.procesa(this);
-	           System.out.print(")");
-	       }
-	       else {
-	           arg.procesa(this);
-	       }
-	   }
+		if (arg.prioridad() < p) {
+
+			this.programa += "(";
+			arg.procesa(this);
+
+			this.programa += ")";
+		} else {
+			arg.procesa(this);
+		}
+	}
 }
