@@ -26,7 +26,7 @@ read nombres.cont
 endwhile;
 i=0;
 write "Introduce un nombre en cada línea: "; nl;
-while i < nombres.cont do
+while *i < nombres.cont do
 
 i = i + 1
 endwhile
