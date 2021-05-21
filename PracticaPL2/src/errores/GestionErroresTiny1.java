@@ -1,7 +1,6 @@
 package errores;
 
 import constructorAST_ascendente.UnidadLexica;
-import constructorAST_descendente.ConstructorASTConstants;
 
 public class GestionErroresTiny1 {
 	
@@ -11,7 +10,7 @@ public class GestionErroresTiny1 {
    }  
    public void errorSintactico(UnidadLexica unidadLexica) {
      System.err.println("ERROR SINTACTICO, fila "+unidadLexica.lexema().fila()+", columna "+unidadLexica.lexema().col()+" "
-     		+ ": Elemento inexperado "+ ConstructorASTConstants.tokenImage[unidadLexica.sym]);
+     		+ ": Elemento inexperado "+ unidadLexica.value);
      System.exit(1);
    }
 }

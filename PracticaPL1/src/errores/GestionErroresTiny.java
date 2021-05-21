@@ -11,7 +11,7 @@ public class GestionErroresTiny {
 	}
    
    public void errorSintactico(int fila, int col, ClaseLexica encontrada, ClaseLexica ... esperadas) {
-     System.err.print("ERROR SINTACTICO: fila "+fila+","+col+": Encontrado "+encontrada+" Se esperada: ");
+     System.err.print("ERROR SINTACTICO: fila "+fila+","+col+": Encontrado "+encontrada+" Se esperaba: ");
      for(ClaseLexica esperada: esperadas)
          System.err.print(esperada+" ");
      System.err.println();

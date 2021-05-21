@@ -4,11 +4,11 @@ package constructorAST_descendente;
 import analizadorSintactico.AnalizadorSintacticoTiny1.*;
 import semops.SemOps;
 
-@SuppressWarnings({"unused", "unchecked", "rawtypes"})
+@SuppressWarnings({"unused", "rawtypes", "unchecked"})
 public class ConstructorAST implements ConstructorASTConstants {
    private SemOps sem = new SemOps();
 
-final public Programa Sp() throws ParseException {
+  final public Programa Sp() throws ParseException {
                    Programa programa;
     programa = Programa();
     jj_consume_token(0);
@@ -550,12 +550,12 @@ final public Programa Sp() throws ParseException {
     case suma:
       jj_consume_token(suma);
       exp1 = E0();
-                                             {if (true) return sem.suma(exp_h, exp1);}
+                                             {if (true) return sem.exp("+", exp_h, exp1);}
       break;
     case resta:
       jj_consume_token(resta);
       exp1 = E1();
-                                              {if (true) return sem.resta(exp_h, exp1);}
+                                              {if (true) return sem.exp("-", exp_h, exp1);}
       break;
     default:
       jj_la1[17] = jj_gen;
@@ -988,12 +988,11 @@ final public Programa Sp() throws ParseException {
       return (jj_ntk = jj_nt.kind);
   }
 
-private java.util.Vector jj_expentries = new java.util.Vector();
+  private java.util.Vector jj_expentries = new java.util.Vector();
   private int[] jj_expentry;
   private int jj_kind = -1;
 
-
-public ParseException generateParseException() {
+  public ParseException generateParseException() {
     jj_expentries.removeAllElements();
     boolean[] la1tokens = new boolean[67];
     for (int i = 0; i < 67; i++) {

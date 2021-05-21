@@ -193,10 +193,10 @@ LParamsReales   ::=
                 {: RESULT = null; :};
 
 E0              ::= E1: exp1 MAS E0: exp2
-                {: RESULT = sem.suma(exp1, exp2); :};
+                {: RESULT = sem.exp("+", exp1, exp2); :};
 
 E0              ::= E1: exp1 MENOS E1: exp2
-                {: RESULT = sem.resta(exp1, exp2); :};
+                {: RESULT = sem.exp("-", exp1, exp2); :};
 
 E0              ::= E1: aDeE1
                 {: RESULT = aDeE1; :};

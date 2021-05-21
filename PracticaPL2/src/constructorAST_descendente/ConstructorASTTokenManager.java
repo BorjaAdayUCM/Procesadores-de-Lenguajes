@@ -2,7 +2,7 @@
 package constructorAST_descendente;
 
 @SuppressWarnings({"unused"})
-class ConstructorASTTokenManager implements ConstructorASTConstants
+public class ConstructorASTTokenManager implements ConstructorASTConstants
 {
   public  java.io.PrintStream debugStream = System.out;
   public  void setDebugStream(java.io.PrintStream ds) { debugStream = ds; }

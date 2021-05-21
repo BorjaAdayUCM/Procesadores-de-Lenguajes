@@ -6,6 +6,10 @@ public class SemOps extends AnalizadorSintacticoTiny1 {
 
 	public Exp exp(String op, Exp arg0, Exp arg1) {
 		switch (op) {
+		case "+": 
+			return suma(arg0, arg1);
+		case "-": 
+			return resta(arg0, arg1);
 		case "and":
 			return and(arg0, arg1);
 		case "or":

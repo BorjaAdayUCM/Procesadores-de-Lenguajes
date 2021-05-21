@@ -7,7 +7,6 @@ package constructorAST_ascendente;
 import errores.GestionErroresTiny1;
 
 
-// See https://github.com/jflex-de/jflex/issues/222
 public class AnalizadorLexicoTiny1 implements java_cup.runtime.Scanner {
 
   /** This character denotes the end of file. */

@@ -189,8 +189,8 @@ PARSER_END(ConstructorAST)
              {exp1 = E1() re0 = RE0(exp1) {return re0;}}
 
   Exp RE0(Exp exp_h) : {Exp exp1;} 
-                       { <suma> exp1 = E0() {return sem.suma(exp_h, exp1);}
-                       | <resta> exp1 = E1() {return sem.resta(exp_h, exp1);}
+                       { <suma> exp1 = E0() {return sem.exp("+", exp_h, exp1);}
+                       | <resta> exp1 = E1() {return sem.exp("-", exp_h, exp1);}
                        | {return exp_h;}}
 
   Exp E1() : {Exp exp1; Exp re1;} 

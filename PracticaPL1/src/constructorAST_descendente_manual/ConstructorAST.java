@@ -190,11 +190,11 @@ public class ConstructorAST {
 		case MAS: 
 			empareja(ClaseLexica.MAS);
 			Exp exp1 = E0();
-			return sem.suma(exph, exp1);
+			return sem.exp("+", exph, exp1);
 		case MENOS: 
 			empareja(ClaseLexica.MENOS);
 			Exp exp2 = E1();
-			return sem.resta(exph, exp2);
+			return sem.exp("-", exph, exp2);
 		case PCIERRE:
 		case PUNTOYCOMA:
 		case EOF: return exph;

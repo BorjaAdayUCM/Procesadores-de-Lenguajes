@@ -68,387 +68,195 @@ import analizadorSintactico.AnalizadorSintacticoTiny1.True;
 public class ProcesamientoPorDefecto implements Procesamiento {
 
 	@Override
-	public void procesa(InsCall insCall) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(InsCall insCall) {}
 
 	@Override
-	public void procesa(Suma suma) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Suma suma) {}
 
 	@Override
-	public void procesa(Resta resta) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Resta resta) {}
 
 	@Override
-	public void procesa(And and) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(And and) {}
 
 	@Override
-	public void procesa(Or or) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Or or) {}
 
 	@Override
-	public void procesa(Menor menor) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Menor menor) {}
 
 	@Override
-	public void procesa(Mayor mayor) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Mayor mayor) {}
 
 	@Override
-	public void procesa(Menor_igual menor_igual) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Menor_igual menor_igual) {}
 
 	@Override
-	public void procesa(Mayor_igual mayor_igual) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Mayor_igual mayor_igual) {}
 
 	@Override
-	public void procesa(Igualdad igualdad) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Igualdad igualdad) {}
 
 	@Override
-	public void procesa(Distinto distinto) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Distinto distinto) {}
 
 	@Override
-	public void procesa(Mul mul) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Mul mul) {}
 
 	@Override
-	public void procesa(Div div) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Div div) {}
 
 	@Override
-	public void procesa(Mod mod) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Mod mod) {}
 
 	@Override
-	public void procesa(Menos menos) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Menos menos) {}
 
 	@Override
-	public void procesa(Not not) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Not not) {}
 
 	@Override
-	public void procesa(NumEnt numEnt) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(NumEnt numEnt) {}
 
 	@Override
-	public void procesa(NumReal numReal) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(NumReal numReal) {}
 
 	@Override
-	public void procesa(Identificador identificador) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Identificador identificador) {}
 
 	@Override
-	public void procesa(True true1) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(True true1) {}
 
 	@Override
-	public void procesa(False false1) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(False false1) {}
 
 	@Override
-	public void procesa(Tipo_int tipo_int) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Tipo_int tipo_int) {}
 
 	@Override
-	public void procesa(Tipo_bool tipo_bool) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Tipo_bool tipo_bool) {}
 
 	@Override
-	public void procesa(Tipo_real tipo_real) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Tipo_real tipo_real) {}
 
 	@Override
-	public void procesa(DecVar decVar) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(DecVar decVar) {}
 
 	@Override
-	public void procesa(DecType decType) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(DecType decType) {}
 
 	@Override
-	public void procesa(DecProc decProc) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(DecProc decProc) {}
 
 	@Override
-	public void procesa(LDecs_1 lDecs_1) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(LDecs_1 lDecs_1) {}
 
 	@Override
-	public void procesa(LDecs_muchas lDecs_muchas) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(LDecs_muchas lDecs_muchas) {}
 
 	@Override
-	public void procesa(LIns_1 lIns_1) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(LIns_1 lIns_1) {}
 
 	@Override
-	public void procesa(LIns_muchas lIns_muchas) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(LIns_muchas lIns_muchas) {}
 
 	@Override
-	public void procesa(LInsV_1 lInsV_1) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(LInsV_1 lInsV_1) {}
 
 	@Override
-	public void procesa(LInsV_muchas lInsV_muchas) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(LInsV_muchas lInsV_muchas) {}
 
 	@Override
-	public void procesa(InsAsignacion insAsignacion) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(InsAsignacion insAsignacion) {}
 
 	@Override
-	public void procesa(InsRead insRead) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(InsRead insRead) {}
 
 	@Override
-	public void procesa(InsWrite insWrite) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(InsWrite insWrite) {}
 
 	@Override
-	public void procesa(InsNew insNew) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(InsNew insNew) {}
 
 	@Override
-	public void procesa(InsDelete insDelete) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(InsDelete insDelete) {}
 
 	@Override
-	public void procesa(InsNL insNL) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(InsNL insNL) {}
 
 	@Override
-	public void procesa(InsBloque insBloque) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(InsBloque insBloque) {}
 
 	@Override
-	public void procesa(InsIf insIf) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(InsIf insIf) {}
 
 	@Override
-	public void procesa(InsIfElse insIfElse) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(InsIfElse insIfElse) {}
 
 	@Override
-	public void procesa(InsWhile insWhile) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(InsWhile insWhile) {}
 
 	@Override
-	public void procesa(LParams_1 lParams_1) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(LParams_1 lParams_1) {}
 
 	@Override
-	public void procesa(LParams_muchos lParams_muchos) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(LParams_muchos lParams_muchos) {}
 
 	@Override
-	public void procesa(Param param) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Param param) {}
 
 	@Override
-	public void procesa(LParamsReales_1 lParamsReales_1) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(LParamsReales_1 lParamsReales_1) {}
 
 	@Override
-	public void procesa(LParamsReales_muchos lParamsReales_muchos) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(LParamsReales_muchos lParamsReales_muchos) {}
 
 	@Override
-	public void procesa(Referencia referencia) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Referencia referencia) {}
 
 	@Override
-	public void procesa(Programa programa) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Programa programa) {}
 
 	@Override
-	public void procesa(Index index) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Index index) {}
 
 	@Override
-	public void procesa(AccessRegPunto accessRegPunto) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(AccessRegPunto accessRegPunto) {}
 
 	@Override
-	public void procesa(AccessRegFlecha accessRegFlecha) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(AccessRegFlecha accessRegFlecha) {}
 
 	@Override
-	public void procesa(Indireccion indireccion) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Indireccion indireccion) {}
 
 	@Override
-	public void procesa(Cadena cadena) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Cadena cadena) {}
 
 	@Override
-	public void procesa(Null null1) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Null null1) {}
 
 	@Override
-	public void procesa(Tipo_string tipo_string) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Tipo_string tipo_string) {}
 
 	@Override
-	public void procesa(Tipo_id tipo_id) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Tipo_id tipo_id) {}
 
 	@Override
-	public void procesa(Tipo_array tipo_array) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Tipo_array tipo_array) {}
 
 	@Override
-	public void procesa(Tipo_pointer tipo_pointer) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Tipo_pointer tipo_pointer) {}
 
 	@Override
-	public void procesa(Campo campo) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(Campo campo) {}
 
 	@Override
-	public void procesa(LCampos_1 lCampos_1) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(LCampos_1 lCampos_1) {}
 
 	@Override
-	public void procesa(LCampos_muchos lCampos_muchos) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void procesa(LCampos_muchos lCampos_muchos) {}
 
 	@Override
-	public void procesa(Tipo_record tipo_record) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+	public void procesa(Tipo_record tipo_record) {}
+
 }
