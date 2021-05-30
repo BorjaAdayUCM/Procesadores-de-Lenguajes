@@ -1,34 +1,40 @@
 package mains;
 
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
-
-import analizadorLexico.AnalizadorLexicoTiny1;
-import analizadorSintacticoAscendente.AnalizadorSintacticoTiny1Ascendente;
-import analizadorSintacticoDescendente.AnalizadorSintacticoTiny1Descendente;
+import analizadorSintactico.AnalizadorSintacticoTiny1.Programa;
+import constructorAST_ascendente.AnalizadorLexicoTiny1;
+import procesamientos.Impresion;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		if(args.length == 2) {
-			if(args[1].equals("desc")) {
-				AnalizadorSintacticoTiny1Descendente analizadorSintactico = new AnalizadorSintacticoTiny1Descendente(new FileReader(args[0]));
-			      analizadorSintactico.Sp();
-			}
-			else if (args[1].equals("asc")){
-				Reader input = new InputStreamReader(new FileInputStream(args[0]));
-				 AnalizadorLexicoTiny1 alex = new AnalizadorLexicoTiny1(input);
-				 AnalizadorSintacticoTiny1Ascendente asint = new AnalizadorSintacticoTiny1Ascendente(alex);
-				 asint.parse();
-			}
-			System.out.println("OK");
-		}
-		else {
-			System.out.println("Los argumetos deben ser el fichero de entrada y la opcion 'asc' o 'desc'");
+		Programa programa = null;
+		if (args[1].equals("desc")) {
+			programa = ejecuta_descendente(args[0]);
+		} else if (args[1].equals("asc")) {
+			programa = ejecuta_ascendente(args[0]);
+		} else {
+			System.err.println("Debe introducir el nombre del fichero y la opción \"asc\" o \"desc\" como parámetros de entrada.");
+			System.exit(1);
 		}
 		
+		Impresion impresion = new Impresion();
+		programa.procesa(impresion);
+		System.out.println(impresion.getPrograma());
 	}
 
+	private static Programa ejecuta_ascendente(String in) throws Exception {
+		Reader input = new InputStreamReader(new FileInputStream(in));
+		AnalizadorLexicoTiny1 alex = new AnalizadorLexicoTiny1(input);
+		constructorAST_ascendente.ConstructorAST constructorast = new constructorAST_ascendente.ConstructorAST(alex);
+		return (Programa) constructorast.parse().value;
+	}
+
+	private static Programa ejecuta_descendente(String in) throws Exception {
+		Reader input = new InputStreamReader(new FileInputStream(in));
+		constructorAST_descendente.ConstructorAST constructorast = new constructorAST_descendente.ConstructorAST(input);
+		return constructorast.Programa();
+	}
 }

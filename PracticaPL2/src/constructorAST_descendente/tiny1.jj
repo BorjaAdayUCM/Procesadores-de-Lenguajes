@@ -1,0 +1,263 @@
+options  {
+  STATIC=false;
+}
+
+PARSER_BEGIN(ConstructorAST)
+package constructorAST_descendente;
+
+import analizadorSintactico.AnalizadorSintacticoTiny1.*;
+import semops.SemOps;
+
+public class ConstructorAST {
+   private SemOps sem = new SemOps();
+}
+
+PARSER_END(ConstructorAST)
+
+  SKIP:{<["\t"," ","\r","\b","\n"]>}
+  SKIP:{<"#"(~["\n"])*>} 
+  TOKEN:{<#letra:["a"-"z","A"-"Z"]>}
+  TOKEN:{<#digitoPositivo:["1"-"9"]>}
+  TOKEN:{<#digito:<digitoPositivo>|"0">} 
+  TOKEN:{<#parteEntera:<digitoPositivo>(<digito>)* |"0">} 
+  TOKEN:{<numeroEntero:("+"|"-")?<parteEntera>>}
+  TOKEN:{<#parteDecimal:"."("0"|(<digito>)*<digitoPositivo>)>}
+  TOKEN:{<#parteExponencial:("E"|"e")<numeroEntero>>}
+  TOKEN:{<numeroReal:<numeroEntero>(<parteDecimal>|<parteExponencial>|<parteDecimal><parteExponencial>)>}
+  TOKEN:{<cadena:"\""(~["\"","\t","\b","\r","\n"])*"\"">}
+  TOKEN: {<int_pr:"int">}
+  TOKEN: {<real:"real">}
+  TOKEN: {<bool:"bool">}
+  TOKEN: {<string:"string">}
+  TOKEN: {<and:"and">}
+  TOKEN: {<or:"or">}
+  TOKEN: {<not:"not">}
+  TOKEN: {<null_pr:"null">}
+  TOKEN: {<true_pr:"true">}
+  TOKEN: {<false_pr:"false">}
+  TOKEN: {<proc:"proc">}
+  TOKEN: {<if_pr:"if">}
+  TOKEN: {<then:"then">}
+  TOKEN: {<else_pr:"else">}
+  TOKEN: {<endif:"endif">}
+  TOKEN: {<while_pr:"while">}
+  TOKEN: {<do_pr:"do">}
+  TOKEN: {<endwhile:"endwhile">}
+  TOKEN: {<call:"call">}
+  TOKEN: {<record:"record">}
+  TOKEN: {<array:"array">}
+  TOKEN: {<of:"of">}
+  TOKEN: {<pointer:"pointer">}
+  TOKEN: {<new_pr:"new">}
+  TOKEN: {<delete:"delete">}
+  TOKEN: {<read:"read">}
+  TOKEN: {<write:"write">}
+  TOKEN: {<nl:"nl">}
+  TOKEN: {<var:"var">}
+  TOKEN: {<type:"type">}
+  TOKEN: {<suma:"+">}
+  TOKEN: {<resta:"-">}
+  TOKEN: {<multiplicacion:"*">}
+  TOKEN: {<division:"/">}
+  TOKEN: {<sep:"&&">}
+  TOKEN: {<modulo:"%">}
+  TOKEN: {<menor:"<">}
+  TOKEN: {<mayor:">">}
+  TOKEN: {<menorIgual:"<=">}
+  TOKEN: {<mayorIgual:">=">}
+  TOKEN: {<igualdad:"==">}
+  TOKEN: {<distinto:"!=">}
+  TOKEN: {<pApert:"(">}
+  TOKEN: {<pCierre:")">}
+  TOKEN: {<pyc:";">}
+  TOKEN: {<igual:"=">}
+  TOKEN: {<corApert:"[">}
+  TOKEN: {<corCierre:"]">}
+  TOKEN: {<llaveAper:"{">}
+  TOKEN: {<llaveCierre:"}">}
+  TOKEN: {<punto:".">}
+  TOKEN: {<flecha:"->">}
+  TOKEN: {<coma:",">}
+  TOKEN: {<ampersand:"&">}
+  TOKEN:{<identificador:<letra>(<letra>|<digito>|"_")*>}
+
+  Programa Sp() : {Programa programa;} 
+  				  { programa = Programa() <EOF> {return programa;}}
+
+  Programa Programa() : {LDecs ldecs; LIns lins;} 
+  						{ ldecs = LDecs() <sep> lins = LIns() {return sem.programa_con_decs(ldecs, lins);}
+  						| lins = LIns() {return sem.programa_sin_decs(lins);}}
+
+  LDecs LDecs() : {Dec dec; LDecs rldecs;} 
+                  { dec = Dec() rldecs = RLDecs(sem.decs_1(dec)) {return rldecs;}
+                  | {return null;}}
+
+  LDecs RLDecs(LDecs ldecs_h) : {Dec dec; LDecs rldecs;} 
+                                { <pyc> dec = Dec() rldecs = RLDecs(sem.decs_muchas(ldecs_h, dec)) {return rldecs;}
+                                | {return ldecs_h;}}
+
+  Dec Dec() : {Tipo tipo; Token id; LParams parform; Bloque bloque;} 
+              { <var> tipo = Tipo() id = <identificador> {return sem.dec_var(tipo, sem.str(id.image, id.beginLine, id.beginColumn));}
+              | <type> tipo = Tipo() id = <identificador> {return sem.dec_type(tipo, sem.str(id.image, id.beginLine, id.beginColumn));}
+              | <proc> id = <identificador> parform = ParForm() bloque = Bloque() {return sem.dec_proc(sem.str(id.image, id.beginLine, id.beginColumn), parform, bloque);}}
+
+  LParams ParForm() : {LParams lparams;} 
+                      { <pApert> lparams = LParams() <pCierre> {return lparams;}}
+
+  LParams LParams() : {Param param; LParams rlparams;} 
+                      { param = Param() rlparams = RLParams(sem.lparams_1(param)) {return rlparams;} 
+                      | {return null;}}
+
+  LParams RLParams(LParams lparams_h) : {Param param; LParams rlparams;} 
+                                        { <coma> param = Param() rlparams = RLParams(sem.lparams_muchos(lparams_h, param)) {return rlparams;}
+                                        | {return lparams_h;}}
+
+  Param Param() : {Tipo tipo; Referencia ref; Token id;} 
+                  { tipo = Tipo() ref = Referencia() id = <identificador> {return sem.param(tipo, ref, sem.str(id.image, id.beginLine, id.beginColumn));}}
+
+  Referencia Referencia() : {} 
+                            { <ampersand> {return sem.referencia();}
+                            | {return null;}}
+
+  Bloque Bloque() : {Programa programa;} 
+                  {<llaveAper> programa = ProgramaBloque() <llaveCierre> {return sem.bloque(programa);}}
+
+  Programa ProgramaBloque() : {Programa programa;} 
+                   			  { programa = Programa() {return programa;}
+                              | {return null;}}
+
+  Tipo Tipo() : {Token t; Tipo tipo; LCampos lcampos;} 
+                { <int_pr> {return sem.tipo_int();}
+                | <real> {return sem.tipo_real();}
+                | <bool> {return sem.tipo_bool();}
+                | <string> {return sem.tipo_string();}
+                | t = <identificador> {return sem.tipo_id(sem.str(t.image, t.beginLine, t.beginColumn));}
+                | <array> <corApert> t = <numeroEntero> <corCierre> <of> tipo = Tipo() {return sem.tipo_array(sem.str(t.image, t.beginLine, t.beginColumn), tipo);}
+                | <record> <llaveAper> lcampos = LCampos() <llaveCierre> {return sem.tipo_record(lcampos);}
+                | <pointer> tipo = Tipo() {return sem.tipo_pointer(tipo);}}
+
+  LCampos LCampos() : {Campo campo; LCampos rlcampos;} 
+                      {campo = Campo() rlcampos = RLCampos(sem.lcampos_1(campo)) {return rlcampos;}}
+
+  LCampos RLCampos(LCampos lcampos_h) : {Campo campo; LCampos rlcampos;} 
+                                        { <pyc> campo = Campo() rlcampos = RLCampos(sem.lcampos_muchos(lcampos_h, campo)) {return rlcampos;} 
+                                        | {return lcampos_h;}}
+
+  Campo Campo() : {Tipo tipo; Token id;} 
+                  {tipo = Tipo() id = <identificador> {return sem.campo(tipo, sem.str(id.image, id.beginLine, id.beginColumn));}}
+
+  LIns LIns() : {Ins ins; LIns rlins;} 
+                {ins = Ins() rlins = RLIns(sem.lins_1(ins)) {return rlins;}}
+
+  LIns RLIns(LIns lins_h) : {Ins ins; LIns rlins;} 
+                            {<pyc> ins = Ins() rlins = RLIns(sem.lins_muchas(lins_h, ins)) {return rlins;}
+                            | {return lins_h;}}
+
+  Ins Ins() : {Exp exp1, exp2; LInsV linsv; Token id; LParamsReales lparamsreales; Bloque bloque; Ins rinsifthen;} 
+               { exp1 = E0() <igual> exp2 = E0() {return sem.ins_asignacion(exp1, exp2);}
+               | <while_pr> exp1 = E0() <do_pr> linsv = LInsV() <endwhile>  {return sem.ins_while(exp1, linsv);}
+               | <read> exp1 = E0() {return sem.ins_read(exp1);}
+               | <write> exp1 = E0() {return sem.ins_write(exp1);}
+               | <nl> {return sem.ins_nl();}
+               | <new_pr> exp1 = E0() {return sem.ins_new(exp1);}
+               | <delete> exp1 = E0() {return sem.ins_delete(exp1);}
+               | <call> id = <identificador> <pApert> lparamsreales = LParamsReales() <pCierre> {return sem.ins_call(sem.str(id.image, id.beginLine, id.beginColumn), lparamsreales);}
+               | bloque = Bloque() {return sem.ins_bloque(bloque);}
+               | <if_pr> exp1 = E0() <then> linsv = LInsV() rinsifthen = RInsIfThen(exp1, linsv) {return rinsifthen;}}
+
+  Ins RInsIfThen(Exp exp1_h, LInsV linsv_h) : {LInsV linsv;} 
+                                              { <endif> {return sem.ins_if(exp1_h, linsv_h);}
+                                              | <else_pr> linsv = LInsV() <endif> {return sem.ins_if_else(exp1_h, linsv_h, linsv);}}
+
+  LInsV LInsV() : {Ins ins; LInsV rlinsv;} 
+                  { ins = Ins() rlinsv = RLInsV(sem.linsv_1(ins)) {return rlinsv;} 
+                  | {return null;}}
+
+  LInsV RLInsV(LInsV linsv_h) : {Ins ins; LInsV rlinsv;} 
+                                { <pyc> ins = Ins() rlinsv = RLInsV(sem.linsv_muchas(linsv_h, ins)) {return rlinsv;}
+                                | {return linsv_h;}}
+
+  LParamsReales LParamsReales() : {Exp exp1; LParamsReales lparamsreales;} 
+                                  { exp1 = E0() lparamsreales = RLParamsReales(sem.preales_1(exp1)) {return lparamsreales;}
+                                  | {return null;}}
+
+  LParamsReales RLParamsReales(LParamsReales lparamsreales_h) : {Exp exp1; LParamsReales rlparamsreales;} 
+                                                                { <coma> exp1 = E0() rlparamsreales = RLParamsReales(sem.preales_muc(lparamsreales_h, exp1)) {return rlparamsreales;} 
+                                                                | {return lparamsreales_h;}}
+
+  Exp E0() : {Exp exp1, re0;} 
+             {exp1 = E1() re0 = RE0(exp1) {return re0;}}
+
+  Exp RE0(Exp exp_h) : {Exp exp1;} 
+                       { <suma> exp1 = E0() {return sem.exp("+", exp_h, exp1);}
+                       | <resta> exp1 = E1() {return sem.exp("-", exp_h, exp1);}
+                       | {return exp_h;}}
+
+  Exp E1() : {Exp exp1; Exp re1;} 
+             {exp1 = E2() re1 = RE1(exp1) {return re1;}}
+
+  Exp RE1(Exp exp_h) : {Exp exp1; Exp re1; String op;} 
+                     { op = OpN1() exp1 = E2() re1 = RE1(sem.exp(op, exp_h, exp1)) {return re1;}
+                     | {return exp_h;}}
+
+  Exp E2() : {Exp exp1, re2;} 
+            {exp1 = E3() re2 = RE2(exp1) {return re2;}}
+
+  Exp RE2(Exp exp_h) : {String op; Exp exp1, re2;} 
+                     {op = OpN2() exp1 = E3() re2 = RE2(sem.exp(op, exp_h, exp1)) {return re2;}
+                     | {return exp_h;}}
+
+  Exp E3() : {Exp exp1, re3;} 
+            {exp1 = E4() re3 = RE3(exp1) {return re3;}}
+
+  Exp RE3(Exp exp_h) : {String op; Exp exp1;} 
+                     { op = OpN3() exp1 = E4() {return sem.exp(op, exp_h, exp1);}
+                     | {return exp_h;}}
+
+  Exp E4() : {Exp exp1;} 
+             { <resta> exp1 = E5() {return sem.menos(exp1);}
+             | <not> exp1 = E4() {return sem.not(exp1);}
+             | exp1 = E5() {return exp1;}}
+
+  Exp E5() : {Exp exp1, re5;} 
+             {exp1 = E6() re5 = RRE5(exp1) {return re5;}}
+
+  Exp RRE5(Exp exp_h) : {Exp re5, rre5;} 
+                        {re5 = RE5(exp_h) rre5= RRE5(re5) {return rre5;}
+                        | {return exp_h;}}
+
+  Exp RE5(Exp exp_h) : {Exp exp1; Token id;} 
+                     { <corApert> exp1 = E0() <corCierre> {return sem.index(exp_h, exp1);}
+                     | <punto> id = <identificador> {return sem.access_reg_punto(exp_h, sem.str(id.image, id.beginLine, id.beginColumn));}
+                     | <flecha> id = <identificador> {return sem.access_reg_flecha(exp_h, sem.str(id.image, id.beginLine, id.beginColumn));}}
+
+  Exp E6() : {Exp exp1;} 
+             { <multiplicacion> exp1 = E6() {return sem.indireccion(exp1);}
+             | exp1 = E7() {return exp1;}}
+
+  Exp E7() : {Token id; Exp exp1;} 
+              { id = <identificador> {return sem.identificador(sem.str(id.image, id.beginLine, id.beginColumn));}
+              | id = <numeroEntero> {return sem.numEnt(sem.str(id.image, id.beginLine, id.beginColumn));}
+              | id = <numeroReal> {return sem.numReal(sem.str(id.image, id.beginLine, id.beginColumn));}
+              | <true_pr> {return sem.true_p();}
+              | <false_pr> {return sem.false_p();}
+              | id = <cadena> {return sem.cadena(sem.str(id.image, id.beginLine, id.beginColumn));}
+              | <null_pr> {return sem.null_p();}
+              | <pApert> exp1 = E0() <pCierre> {return exp1;}}
+
+  String OpN1() : {} 
+                { <and> {return "and";}
+                | <or> {return "or";}}
+
+  String OpN2() : {} 
+                { <menor> {return "<";}
+                | <mayor> {return ">";}
+                | <menorIgual> {return "<=";}
+                | <mayorIgual> {return ">=";}
+                | <igualdad> {return "==";}
+                | <distinto> {return "!=";}}
+
+  String OpN3() : {} 
+                { <multiplicacion> {return "*";}
+                | <division> {return "/";}
+                | <modulo> {return "%";}}

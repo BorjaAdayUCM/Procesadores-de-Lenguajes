@@ -1,6 +1,0 @@
-int   peso;
- bool pesado
- 		&&
-    peso = (-45.001 * (12e-56 * +0.0)) / -2.05;
- pesado = (peso > 10.0) or (peso / 2 <= +0.0e-1);
-pesado = (not false) and true or x or z

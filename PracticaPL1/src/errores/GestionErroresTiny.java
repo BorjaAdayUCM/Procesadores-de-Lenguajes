@@ -1,6 +1,6 @@
 package errores;
 
-import analizadorLexico.ClaseLexica;
+import constructorAST_descendente_manual.ClaseLexica;
 
 public class GestionErroresTiny {
 	
@@ -11,15 +11,15 @@ public class GestionErroresTiny {
 	}
    
    public void errorSintactico(int fila, int col, ClaseLexica encontrada, ClaseLexica ... esperadas) {
-     System.out.print("ERROR SINTACTICO: fila "+fila+","+col+": Encontrado "+encontrada+" Se esperada: ");
+     System.err.print("ERROR SINTACTICO: fila "+fila+","+col+": Encontrado "+encontrada+" Se esperaba: ");
      for(ClaseLexica esperada: esperadas)
-         System.out.print(esperada+" ");
-     System.out.println();
+         System.err.print(esperada+" ");
+     System.err.println();
      System.exit(1);
    }
    
    public void errorFatal(Exception e) {
-     System.out.println(e);
+     System.err.println(e);
      e.printStackTrace();
      System.exit(1);
    }

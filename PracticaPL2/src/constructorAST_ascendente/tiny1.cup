@@ -1,0 +1,305 @@
+package constructorAST_ascendente;
+
+import java_cup.runtime.*;
+import semops.SemOps;
+import analizadorSintactico.AnalizadorSintacticoTiny1.*;
+import errores.GestionErroresTiny1;
+
+scan with {: return getScanner().next_token(); :};
+action code {:
+   private SemOps sem = new SemOps();
+:};
+parser code {: 
+   private GestionErroresTiny1 errores;
+   public void syntax_error(Symbol unidadLexica) {
+     errores.errorSintactico((UnidadLexica)unidadLexica);
+   }
+:};
+init with {: 
+   errores = new GestionErroresTiny1();
+   AnalizadorLexicoTiny1 analizadorLexico = (AnalizadorLexicoTiny1)getScanner();
+   analizadorLexico.fijaGestionErrores(errores);
+:};
+
+
+terminal     MAS, MENOS, POR, DIV, SEP, MOD, MENOR, MAYOR, MENORIGUAL, 
+             MAYORIGUAL, IGUALDAD, IGUAL, DISTINTO, PAPER, PCIERRE, PYC, CORAPER, CORCIERRE,
+             LLAVEAPER, LLAVECIERRE, PUNTO, COMA, FLECHA, AMPERSAND, INT,
+             REAL, BOOL, STRING, AND, OR, NOT, NULL, TRUE, FALSE, PROC,
+             IF, THEN, ELSE, ENDIF, WHILE, DO, ENDWHILE, CALL, RECORD,
+             ARRAY, OF, POINTER, NEW , DELETE, READ, WRITE, NL, VAR, TYPE;
+
+terminal StringLocalizado IDEN, NUMENT, NUMREAL, CADENA;
+
+non terminal  Programa Programa, ProgramaBloque;
+non terminal  LDecs LDecs;
+non terminal  Dec Dec;
+non terminal  LParams LParams, ParForm;
+non terminal  Param Param;
+non terminal  Referencia Referencia;
+non terminal  Bloque Bloque;
+non terminal  Tipo Tipo;
+non terminal  LCampos LCampos;
+non terminal  Campo Campo;
+non terminal  LIns LIns;
+non terminal  Ins Ins;
+non terminal  LInsV LInsV;
+non terminal  LParamsReales LParamsReales;
+non terminal  Exp E0, E1, E2, E3, E4, E5, E6, E7;
+non terminal  String OpN1, OpN2, OpN3;
+
+Programa        ::= LDecs: ldecs SEP LIns: lins
+                {: RESULT = sem.programa_con_decs(ldecs, lins); :};
+
+Programa        ::= LIns: lins
+                {: RESULT = sem.programa_sin_decs(lins); :};
+
+LDecs           ::= LDecs: ldecs PYC Dec: dec
+                {: RESULT = sem.decs_muchas(ldecs, dec); :};
+
+LDecs           ::= Dec: dec
+                {: RESULT = sem.decs_1(dec); :};
+
+LDecs           ::=
+                {: RESULT = null; :};
+
+Dec             ::= VAR Tipo: tipo IDEN: id
+                {: RESULT = sem.dec_var(tipo, id); :};
+
+Dec             ::= TYPE Tipo: tipo IDEN: id
+                {: RESULT = sem.dec_type(tipo, id); :};
+
+Dec             ::= PROC IDEN: id ParForm: parform Bloque: bloque
+                {: RESULT = sem.dec_proc(id, parform, bloque); :};
+
+ParForm         ::= PAPER LParams: lparams PCIERRE
+                {: RESULT = lparams; :};
+
+LParams         ::= LParams: lparams COMA Param: param
+                {: RESULT = sem.lparams_muchos(lparams, param); :};
+
+LParams         ::= Param: param
+                {: RESULT = sem.lparams_1(param); :};
+
+LParams         ::=
+                {: RESULT = null; :};
+
+Param           ::= Tipo: tipo Referencia: ref IDEN: id
+                {: RESULT = sem.param(tipo, ref, id); :};
+
+Referencia      ::= AMPERSAND
+                {: RESULT = sem.referencia(); :};
+
+Referencia      ::=
+                {: RESULT = null; :};
+
+Bloque          ::= LLAVEAPER ProgramaBloque: programabloque LLAVECIERRE
+                {: RESULT = sem.bloque(programabloque); :};
+
+ProgramaBloque  ::= Programa: programa
+                {: RESULT = programa; :};
+
+ProgramaBloque  ::=
+                {: RESULT = null; :};
+
+Tipo            ::= INT
+                {: RESULT = sem.tipo_int(); :};
+
+Tipo            ::= REAL
+                {: RESULT = sem.tipo_real(); :};
+
+Tipo            ::= BOOL
+                {: RESULT = sem.tipo_bool(); :};
+
+Tipo            ::= STRING
+                {: RESULT = sem.tipo_string(); :};
+
+Tipo            ::= IDEN: id
+                {: RESULT = sem.tipo_id(id); :};
+
+Tipo            ::= ARRAY CORAPER NUMENT: nument CORCIERRE OF Tipo: tipo
+                {: RESULT = sem.tipo_array(nument, tipo); :};
+
+Tipo            ::= RECORD LLAVEAPER LCampos: lcampos LLAVECIERRE
+                {: RESULT = sem.tipo_record(lcampos); :};
+
+Tipo            ::= POINTER Tipo: tipo
+                {: RESULT = sem.tipo_pointer(tipo); :};
+
+LCampos         ::= LCampos: lcampos PYC Campo: campo
+                {: RESULT = sem.lcampos_muchos(lcampos, campo); :};
+
+LCampos         ::= Campo: campo
+                {: RESULT = sem.lcampos_1(campo); :};
+
+Campo           ::= Tipo: tipo IDEN: id
+                {: RESULT = sem.campo(tipo, id); :};
+
+LIns            ::= LIns: lins PYC Ins: ins
+                {: RESULT = sem.lins_muchas(lins, ins); :};
+
+LIns            ::= Ins: ins
+                {: RESULT = sem.lins_1(ins); :};
+
+Ins             ::= E0: exp1 IGUAL E0: exp2
+                {: RESULT = sem.ins_asignacion(exp1, exp2); :};
+
+Ins             ::= IF E0: exp THEN LInsV: linsv ENDIF
+                {: RESULT = sem.ins_if(exp, linsv); :};
+
+Ins             ::= IF E0: exp THEN LInsV: linsv1 ELSE LInsV: linsv2 ENDIF
+                {: RESULT = sem.ins_if_else(exp, linsv1, linsv2); :};
+
+Ins             ::= WHILE E0: exp DO LInsV: linsv ENDWHILE
+                {: RESULT = sem.ins_while(exp, linsv); :};
+
+Ins             ::= READ E0: exp
+                {: RESULT = sem.ins_read(exp); :};
+
+Ins             ::= WRITE E0: exp
+                {: RESULT = sem.ins_write(exp); :};
+
+Ins             ::= NL
+                {: RESULT = sem.ins_nl(); :};
+
+Ins             ::= NEW E0: exp
+                {: RESULT = sem.ins_new(exp); :};
+
+Ins             ::= DELETE E0: exp
+                {: RESULT = sem.ins_delete(exp); :};
+
+Ins             ::= CALL IDEN: id PAPER LParamsReales: lparamsreales PCIERRE
+                {: RESULT = sem.ins_call(id, lparamsreales); :};
+
+Ins             ::= Bloque: bloque
+                {: RESULT = sem.ins_bloque(bloque); :};
+
+LInsV           ::= LInsV: linsv PYC Ins: ins
+                {: RESULT = sem.linsv_muchas(linsv, ins); :};
+
+LInsV           ::= Ins: ins
+                {: RESULT = sem.linsv_1(ins); :};
+
+LInsV           ::=
+                {: RESULT = null; :};
+
+LParamsReales   ::= LParamsReales: lparamsreales COMA E0: exp
+                {: RESULT = sem.preales_muc(lparamsreales, exp); :};
+
+LParamsReales   ::= E0: exp
+                {: RESULT = sem.preales_1(exp); :};
+
+LParamsReales   ::=
+                {: RESULT = null; :};
+
+E0              ::= E1: exp1 MAS E0: exp2
+                {: RESULT = sem.exp("+", exp1, exp2); :};
+
+E0              ::= E1: exp1 MENOS E1: exp2
+                {: RESULT = sem.exp("-", exp1, exp2); :};
+
+E0              ::= E1: aDeE1
+                {: RESULT = aDeE1; :};
+
+E1              ::= E1: exp1 OpN1: op E2: exp2
+                {: RESULT = sem.exp(op, exp1, exp2); :};
+
+E1              ::= E2: aDeE2
+                {: RESULT = aDeE2; :};
+
+E2              ::= E2: exp1 OpN2: op E3: exp2
+                {: RESULT = sem.exp(op, exp1, exp2); :};
+
+E2              ::= E3: aDeE3
+                {: RESULT = aDeE3; :};
+
+E3              ::= E4: exp1 OpN3: op E4: exp2
+                {: RESULT = sem.exp(op, exp1, exp2); :};
+
+E3              ::= E4: aDeE4
+                {: RESULT = aDeE4; :};
+
+E4              ::= MENOS E5: exp
+                {: RESULT = sem.menos(exp); :};
+
+E4              ::= NOT E4: exp
+                {: RESULT = sem.not(exp); :};
+
+E4              ::= E5: aDeE5
+                {: RESULT = aDeE5; :};
+
+E5              ::= E5: exp1 CORAPER E0: exp2 CORCIERRE
+                {: RESULT = sem.index(exp1, exp2); :};
+
+E5              ::= E5: exp PUNTO IDEN: id
+                {: RESULT = sem.access_reg_punto(exp, id); :};
+
+E5              ::= E5: exp FLECHA IDEN: id
+                {: RESULT = sem.access_reg_flecha(exp, id); :};
+
+E5              ::= E6: aDeE6
+                {: RESULT = aDeE6; :};
+
+E6              ::= POR E6: exp
+                {: RESULT = sem.indireccion(exp); :};
+
+E6              ::= E7: aDeE7
+                {: RESULT = aDeE7; :};
+
+E7              ::= IDEN: id
+                {: RESULT = sem.identificador(id); :};
+
+E7              ::= NUMENT: nument
+                {: RESULT = sem.numEnt(nument); :};
+
+E7              ::= NUMREAL: numreal
+                {: RESULT = sem.numReal(numreal); :};
+
+E7              ::= CADENA: cadena
+                {: RESULT = sem.cadena(cadena); :};
+
+E7              ::= TRUE
+                {: RESULT = sem.true_p(); :};
+
+E7              ::= FALSE
+                {: RESULT = sem.false_p(); :};
+
+E7              ::= NULL
+                {: RESULT = sem.null_p(); :};
+
+E7              ::= PAPER E0: aDeE0 PCIERRE
+                {: RESULT = aDeE0; :};
+
+OpN1            ::= AND
+                {: RESULT = "and"; :};
+
+OpN1            ::= OR
+                {: RESULT = "or"; :};
+
+OpN2            ::= MENOR
+                {: RESULT = "<"; :};
+
+OpN2            ::= MAYOR
+                {: RESULT = ">"; :};
+
+OpN2            ::= MENORIGUAL
+                {: RESULT = "<="; :};
+
+OpN2            ::= MAYORIGUAL
+                {: RESULT = ">="; :};
+
+OpN2            ::= IGUALDAD
+                {: RESULT = "=="; :};
+
+OpN2            ::= DISTINTO
+                {: RESULT = "!="; :};
+
+OpN3            ::= POR
+                {: RESULT = "*"; :};
+
+OpN3            ::= DIV
+                {: RESULT = "/"; :};
+
+OpN3            ::= MOD
+                {: RESULT = "%"; :};
+

@@ -1,14 +1,16 @@
 package errores;
 
-import analizadorLexico.UnidadLexica;
+import constructorAST_ascendente.UnidadLexica;
 
 public class GestionErroresTiny1 {
+	
    public void errorLexico(int fila, String lexema) {
-     System.out.println("ERROR LEXICO, fila "+fila+": Caracter inexperado: "+lexema); 
+     System.err.println("ERROR LEXICO, fila "+fila+": Caracter inexperado: "+lexema); 
      System.exit(1);
    }  
    public void errorSintactico(UnidadLexica unidadLexica) {
-     System.out.println("ERROR SINTACTICO, fila "+unidadLexica.fila()+", columna "+unidadLexica.columna()+" : Elemento inexperado "+ unidadLexica.value);
+     System.err.println("ERROR SINTACTICO, fila "+unidadLexica.lexema().fila()+", columna "+unidadLexica.lexema().col()+" "
+     		+ ": Elemento inexperado "+ unidadLexica.value);
      System.exit(1);
    }
 }
