@@ -1,4 +1,4 @@
-package analizadorSintactico;
+package procesamientos;
 
 import analizadorSintactico.AnalizadorSintacticoTiny1.*;
 
@@ -67,4 +67,5 @@ public interface Procesamiento {
 	void procesa(LCampos_1 lCampos_1);
 	void procesa(LCampos_muchos lCampos_muchos);
 	void procesa(Tipo_record tipo_record);
+	void procesa(Bloque bloque);
 }

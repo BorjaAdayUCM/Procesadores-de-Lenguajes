@@ -1,14 +1,57 @@
 package analizadorSintactico;
 
-public class AnalizadorSintacticoTiny1 {
+import procesamientos.Procesamiento;
 
-	public static abstract class Exp {
+public class AnalizadorSintacticoTiny1 {
+	
+	public static abstract class Nodo {
+		
+		private Dec vinculo;
+		private TipoEnum tipoNodo;
+		
+		public Nodo()
+		{
+			vinculo = null;
+		}
+		
+		public Dec getVinculo() {
+			return vinculo;
+		}
+		
+		public void setVinculo(Dec vinculo) {
+			this.vinculo = vinculo;
+		}
+		
+		public TipoEnum getTipoNodo() {
+			return tipoNodo;
+		}
+		
+		public void setTipoNodo(TipoEnum tipoEnum) {
+			this.tipoNodo = tipoEnum;
+		}
+	}
+	
+	public enum TipoExpEnum {
+		  SUMA, RESTA , AND, OR, IGUALDAD, DESIGUALDAD, MENOR, MAYOR, MENORIGUAL, MAYORIGUAL, 
+		  MUL, DIV, MOD, MENOS, NOT, INDEX, PUNTO, FLECHA, INDIR, IDENTIFICADOR, NUMEROENTERO, 
+		  NUMEROREAL, STRING, TRUE, FALSE, NULL
+		}
+
+	public static abstract class Exp extends Nodo {
+		
 		public Exp() {
+			super();
 		}
 
 		public abstract int prioridad();
 
 		public abstract void procesa(Procesamiento procesamiento);
+		
+		public abstract TipoExpEnum getTipoExp();
+		
+		public boolean esDesignador() {
+			return false;
+		}
 	}
 
 	public static class StringLocalizado {
@@ -32,6 +75,10 @@ public class AnalizadorSintacticoTiny1 {
 
 		public String toString() {
 			return s;
+		}
+		
+		public String toStringErr() {
+			return s + "(" + fila + ", " + col + ")";
 		}
 
 		public boolean equals(Object o) {
@@ -93,6 +140,10 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.SUMA;
+		}
 	}
 
 	public static class Resta extends ExpAditiva {
@@ -102,6 +153,10 @@ public class AnalizadorSintacticoTiny1 {
 
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.RESTA;
 		}
 	}
 
@@ -123,6 +178,10 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.AND;
+		}
 	}
 
 	public static class Or extends ExpLogica {
@@ -132,6 +191,10 @@ public class AnalizadorSintacticoTiny1 {
 
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.OR;
 		}
 	}
 
@@ -153,6 +216,10 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+	
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.MENOR;
+		}
 	}
 
 	public static class Mayor extends ExpComparativa {
@@ -162,6 +229,10 @@ public class AnalizadorSintacticoTiny1 {
 
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+	
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.MAYOR;
 		}
 	}
 
@@ -173,6 +244,10 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.MENORIGUAL;
+		}
 	}
 
 	public static class Mayor_igual extends ExpComparativa {
@@ -182,6 +257,10 @@ public class AnalizadorSintacticoTiny1 {
 
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.MAYORIGUAL;
 		}
 	}
 
@@ -193,6 +272,10 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.IGUALDAD;
+		}
 	}
 
 	public static class Distinto extends ExpComparativa {
@@ -202,6 +285,10 @@ public class AnalizadorSintacticoTiny1 {
 
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.DESIGUALDAD;
 		}
 	}
 
@@ -223,6 +310,10 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.MUL;
+		}
 	}
 
 	public static class Div extends ExpMultiplicativa {
@@ -233,6 +324,10 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.DIV;
+		}
 	}
 
 	public static class Mod extends ExpMultiplicativa {
@@ -242,6 +337,10 @@ public class AnalizadorSintacticoTiny1 {
 
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.MOD;
 		}
 	}
 
@@ -263,6 +362,10 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.MENOS;
+		}
 	}
 
 	public static class Not extends ExpNegativa {
@@ -272,6 +375,10 @@ public class AnalizadorSintacticoTiny1 {
 
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.NOT;
 		}
 	}
 
@@ -300,63 +407,78 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.INDEX;
+		}
+
+		@Override
+		public boolean esDesignador() {
+			return true;
+		}
+	}
+	
+	public static abstract class AccessReg extends Exp {
+		private Exp exp1;
+		private StringLocalizado id;
+
+		public AccessReg(Exp exp1, StringLocalizado id) {
+			this.exp1 = exp1;
+			this.id = id;
+		}
+
+		public Exp exp1() {
+			return exp1;
+		}
+
+		public StringLocalizado id() {
+			return id;
+		}
+
+		@Override
+		public int prioridad() {
+			return 5;
+		}
+		
+		public abstract TipoExpEnum getTipoExp();
+		
+		@Override
+		public boolean esDesignador() {
+			return true;
+		}
 
 	}
 
-	public static class AccessRegPunto extends Exp {
-		private Exp exp1;
-		private StringLocalizado id;
+	public static class AccessRegPunto extends AccessReg {
 
 		public AccessRegPunto(Exp exp1, StringLocalizado id) {
-			this.exp1 = exp1;
-			this.id = id;
-		}
-
-		public Exp exp1() {
-			return exp1;
-		}
-
-		public StringLocalizado id() {
-			return id;
-		}
-
-		@Override
-		public int prioridad() {
-			return 5;
+			super(exp1, id);
 		}
 
 		@Override
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.PUNTO;
 		}
 
 	}
-
-	public static class AccessRegFlecha extends Exp {
-		private Exp exp1;
-		private StringLocalizado id;
+	
+	public static class AccessRegFlecha extends AccessReg {
 
 		public AccessRegFlecha(Exp exp1, StringLocalizado id) {
-			this.exp1 = exp1;
-			this.id = id;
-		}
-
-		public Exp exp1() {
-			return exp1;
-		}
-
-		public StringLocalizado id() {
-			return id;
-		}
-
-		@Override
-		public int prioridad() {
-			return 5;
+			super(exp1, id);
 		}
 
 		@Override
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.FLECHA;
 		}
 
 	}
@@ -381,7 +503,15 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.INDIR;
+		}
 
+		@Override
+		public boolean esDesignador() {
+			return true;
+		}
 	}
 
 	public static class Identificador extends Exp {
@@ -402,6 +532,20 @@ public class AnalizadorSintacticoTiny1 {
 
 		public final int prioridad() {
 			return 7;
+		}
+
+		@Override
+		public String toString() {
+			return this.id.s;
+		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.IDENTIFICADOR;
+		}
+		
+		@Override
+		public boolean esDesignador() {
+			return true;
 		}
 	}
 
@@ -424,6 +568,10 @@ public class AnalizadorSintacticoTiny1 {
 		public final int prioridad() {
 			return 7;
 		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.NUMEROENTERO;
+		}
 	}
 
 	public static class NumReal extends Exp {
@@ -445,6 +593,10 @@ public class AnalizadorSintacticoTiny1 {
 		public final int prioridad() {
 			return 7;
 		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.NUMEROREAL;
+		}
 	}
 
 	public static class Cadena extends Exp {
@@ -465,6 +617,10 @@ public class AnalizadorSintacticoTiny1 {
 
 		public final int prioridad() {
 			return 7;
+		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.STRING;
 		}
 	}
 
@@ -495,6 +651,10 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.TRUE;
+		}
 	}
 
 	public static class False extends Booleano {
@@ -504,6 +664,10 @@ public class AnalizadorSintacticoTiny1 {
 
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.FALSE;
 		}
 	}
 
@@ -526,16 +690,26 @@ public class AnalizadorSintacticoTiny1 {
 		public int prioridad() {
 			return 7;
 		}
+		
+		public TipoExpEnum getTipoExp() {
+			return TipoExpEnum.NULL;
+		}
 
 	}
+	
+	public enum TipoEnum {
+		INT, REAL, STRING, BOOL, ID, POINTER, ARRAY, RECORD, ERROR, OK, NULL
+	}
 
-	public static abstract class Tipo {
-
+	public static abstract class Tipo extends Nodo {
+		
 		public Tipo() {
 
 		}
 
 		public abstract void procesa(Procesamiento procesamiento);
+		
+		public abstract TipoEnum getTipoTipo();
 	}
 
 	public static abstract class TipoBasico extends Tipo {
@@ -561,6 +735,11 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+
+		@Override
+		public TipoEnum getTipoTipo() {
+			return TipoEnum.INT;
+		}
 	}
 
 	public static class Tipo_bool extends TipoBasico {
@@ -570,6 +749,11 @@ public class AnalizadorSintacticoTiny1 {
 
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+		
+		@Override
+		public TipoEnum getTipoTipo() {
+			return TipoEnum.BOOL;
 		}
 	}
 
@@ -581,6 +765,11 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+		
+		@Override
+		public TipoEnum getTipoTipo() {
+			return TipoEnum.REAL;
+		}
 	}
 
 	public static class Tipo_string extends TipoBasico {
@@ -590,6 +779,11 @@ public class AnalizadorSintacticoTiny1 {
 
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+		
+		@Override
+		public TipoEnum getTipoTipo() {
+			return TipoEnum.STRING;
 		}
 	}
 
@@ -607,6 +801,11 @@ public class AnalizadorSintacticoTiny1 {
 
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+		
+		@Override
+		public TipoEnum getTipoTipo() {
+			return TipoEnum.ID;
 		}
 	}
 
@@ -631,6 +830,11 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+		
+		@Override
+		public TipoEnum getTipoTipo() {
+			return TipoEnum.ARRAY;
+		}
 	}
 
 	public static class Tipo_pointer extends Tipo {
@@ -647,6 +851,11 @@ public class AnalizadorSintacticoTiny1 {
 
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+		
+		@Override
+		public TipoEnum getTipoTipo() {
+			return TipoEnum.POINTER;
 		}
 	}
 
@@ -665,13 +874,24 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+		
+		@Override
+		public TipoEnum getTipoTipo() {
+			return TipoEnum.RECORD;
+		}
+	}
+	
+	public enum LCamposEnum {
+		SIMPLE, COMPUESTA
 	}
 
-	public static abstract class LCampos {
+	public static abstract class LCampos extends Nodo {
 		public LCampos() {
 		}
 
 		public abstract void procesa(Procesamiento p);
+		
+		public abstract LCamposEnum getTipoLCampos();
 	}
 
 	public static class LCampos_1 extends LCampos {
@@ -688,6 +908,11 @@ public class AnalizadorSintacticoTiny1 {
 
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+
+		@Override
+		public LCamposEnum getTipoLCampos() {
+			return LCamposEnum.SIMPLE;
 		}
 	}
 
@@ -712,9 +937,14 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+
+		@Override
+		public LCamposEnum getTipoLCampos() {
+			return LCamposEnum.COMPUESTA;
+		}
 	}
 
-	public static class Campo {
+	public static class Campo extends Nodo {
 		private Tipo tipo;
 		private StringLocalizado id;
 
@@ -736,71 +966,93 @@ public class AnalizadorSintacticoTiny1 {
 			p.procesa(this);
 		}
 	}
+	
+	public enum DecEnum {
+		VAR, TYPE, PROC
+	}
 
-	public static abstract class Dec {
-		public Dec() {
+	public static abstract class Dec extends Nodo {
+		
+		private int direccion;
+		private StringLocalizado id;
+		
+		public Dec(StringLocalizado id) {
+			this.id = id;
+		}
+		
+		public int getDireccion() {
+			return this.direccion;
+		}
+		
+		public void setDireccion(int direccion) {
+			this.direccion = direccion;
 		}
 
 		public abstract void procesa(Procesamiento p);
+		
+		public abstract DecEnum tipoDec();
+		
+		public StringLocalizado id() {
+			return id;
+		}
+	}
+	
+	public static abstract class DecConTipo extends Dec {
+		
+		private Tipo tipo;
+
+		public DecConTipo(Tipo tipo, StringLocalizado id) {
+			super(id);
+			this.tipo = tipo;
+		}
+
+		public Tipo tipo() {
+			return tipo;
+		}
+
+		
+		
+		public abstract DecEnum tipoDec();
 	}
 
-	public static class DecVar extends Dec {
-		private Tipo tipo;
-		private StringLocalizado id;
+	public static class DecVar extends DecConTipo {
 
 		public DecVar(Tipo tipo, StringLocalizado id) {
-			this.tipo = tipo;
-			this.id = id;
-		}
-
-		public Tipo tipo() {
-			return tipo;
-		}
-
-		public StringLocalizado id() {
-			return id;
+			super(tipo, id);
 		}
 
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+		
+		public DecEnum tipoDec() {
+			return DecEnum.VAR;
 		}
 	}
 
-	public static class DecType extends Dec {
-		private Tipo tipo;
-		private StringLocalizado id;
-
+	public static class DecType extends DecConTipo {
+		
 		public DecType(Tipo tipo, StringLocalizado id) {
-			this.tipo = tipo;
-			this.id = id;
-		}
-
-		public Tipo tipo() {
-			return tipo;
-		}
-
-		public StringLocalizado id() {
-			return id;
+			super(tipo, id);
 		}
 
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
+		}
+		
+		public DecEnum tipoDec() {
+			return DecEnum.TYPE;
 		}
 	}
 
 	public static class DecProc extends Dec {
-		private StringLocalizado id;
 		private LParams lparams;
 		private Bloque bloque;
 
 		public DecProc(StringLocalizado id, LParams lparams, Bloque bloque) {
-			this.id = id;
+			super(id);
 			this.lparams = lparams;
 			this.bloque = bloque;
-		}
-
-		public StringLocalizado id() {
-			return id;
 		}
 
 		public LParams lparams() {
@@ -814,13 +1066,18 @@ public class AnalizadorSintacticoTiny1 {
 		public void procesa(Procesamiento p) {
 			p.procesa(this);
 		}
+		
+		public DecEnum tipoDec() {
+			return DecEnum.PROC;
+		}
 	}
 
-	public static abstract class LDecs {
+	public static abstract class LDecs extends Nodo {
 		public LDecs() {
 		}
 
 		public abstract void procesa(Procesamiento p);
+
 	}
 
 	public static class LDecs_1 extends LDecs {
@@ -863,7 +1120,7 @@ public class AnalizadorSintacticoTiny1 {
 		}
 	}
 
-	public static abstract class LIns {
+	public static abstract class LIns extends Nodo {
 		public LIns() {
 		}
 
@@ -910,7 +1167,7 @@ public class AnalizadorSintacticoTiny1 {
 		}
 	}
 
-	public static abstract class LInsV {
+	public static abstract class LInsV extends Nodo {
 		public LInsV() {
 		}
 
@@ -957,7 +1214,7 @@ public class AnalizadorSintacticoTiny1 {
 		}
 	}
 
-	public static abstract class Ins {
+	public static abstract class Ins extends Nodo {
 		public Ins() {
 		}
 
@@ -1088,7 +1345,7 @@ public class AnalizadorSintacticoTiny1 {
 
 	}
 
-	public static class Bloque {
+	public static class Bloque extends Nodo {
 		private Programa programa;
 
 		public Bloque(Programa programa) {
@@ -1097,6 +1354,10 @@ public class AnalizadorSintacticoTiny1 {
 
 		public Programa programa() {
 			return programa;
+		}
+
+		public void procesa(Procesamiento p) {
+			p.procesa(this);
 		}
 	}
 
@@ -1201,7 +1462,7 @@ public class AnalizadorSintacticoTiny1 {
 		}
 	}
 
-	public static abstract class LParams {
+	public static abstract class LParams extends Nodo {
 		public LParams() {
 		}
 
@@ -1248,7 +1509,7 @@ public class AnalizadorSintacticoTiny1 {
 		}
 	}
 
-	public static class Param {
+	public static class Param extends Nodo {
 		private Tipo tipo;
 		private Referencia ref;
 		private StringLocalizado id;
@@ -1276,7 +1537,7 @@ public class AnalizadorSintacticoTiny1 {
 		}
 	}
 
-	public static abstract class LParamsReales {
+	public static abstract class LParamsReales extends Nodo {
 		public LParamsReales() {
 		}
 
@@ -1323,7 +1584,7 @@ public class AnalizadorSintacticoTiny1 {
 		}
 	}
 
-	public static class Referencia {
+	public static class Referencia extends Nodo {
 		private String lexema;
 
 		public String lexema() {
@@ -1340,7 +1601,7 @@ public class AnalizadorSintacticoTiny1 {
 
 	}
 
-	public static class Programa {
+	public static class Programa extends Nodo {
 		private LDecs ldecs;
 		private LIns lins;
 

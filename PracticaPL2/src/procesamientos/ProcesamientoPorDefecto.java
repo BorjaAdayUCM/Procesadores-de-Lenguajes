@@ -1,8 +1,9 @@
-package analizadorSintactico;
+package procesamientos;
 
 import analizadorSintactico.AnalizadorSintacticoTiny1.AccessRegFlecha;
 import analizadorSintactico.AnalizadorSintacticoTiny1.AccessRegPunto;
 import analizadorSintactico.AnalizadorSintacticoTiny1.And;
+import analizadorSintactico.AnalizadorSintacticoTiny1.Bloque;
 import analizadorSintactico.AnalizadorSintacticoTiny1.Cadena;
 import analizadorSintactico.AnalizadorSintacticoTiny1.Campo;
 import analizadorSintactico.AnalizadorSintacticoTiny1.DecProc;
@@ -258,5 +259,8 @@ public class ProcesamientoPorDefecto implements Procesamiento {
 
 	@Override
 	public void procesa(Tipo_record tipo_record) {}
+	
+	@Override
+	public void procesa(Bloque bloque) {}
 
 }

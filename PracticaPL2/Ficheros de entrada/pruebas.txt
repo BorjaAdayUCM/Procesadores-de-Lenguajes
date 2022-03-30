@@ -1,0 +1,13 @@
+type int miBool;
+type     record {
+int cont;
+array [50] of string nombres_r
+} tListaNombres;
+var tListaNombres nombres; # Aquí se guardarán los nombres leídos (max. 50)
+var int i;
+var miBool j;
+var miBool x
+&&
+nombres.cont = 1;
+i = 2;
+j = 1

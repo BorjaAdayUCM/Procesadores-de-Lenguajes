@@ -1,6 +1,5 @@
 package procesamientos;
 
-import analizadorSintactico.ProcesamientoPorDefecto;
 import analizadorSintactico.AnalizadorSintacticoTiny1.AccessRegFlecha;
 import analizadorSintactico.AnalizadorSintacticoTiny1.AccessRegPunto;
 import analizadorSintactico.AnalizadorSintacticoTiny1.And;
@@ -77,11 +76,10 @@ public class Impresion extends ProcesamientoPorDefecto {
 	public String getPrograma() {
 		return this.programa;
 	}
-
+	
 	public void procesa(InsCall insCall) {
 		this.programa += "call " + insCall.id() + "(";
-		if (insCall.lparamsreales() != null)
-			insCall.lparamsreales().procesa(this);
+		if (insCall.lparamsreales() != null) insCall.lparamsreales().procesa(this);
 		this.programa += ")";
 	}
 
@@ -303,7 +301,7 @@ public class Impresion extends ProcesamientoPorDefecto {
 		this.programa += "if ";
 		insIf.exp1().procesa(this);
 		this.programa += " then\n";
-		insIf.linsv().procesa(this);
+		if (insIf.linsv() != null) insIf.linsv().procesa(this); 
 		this.programa += "\nendif";
 	}
 
@@ -311,9 +309,9 @@ public class Impresion extends ProcesamientoPorDefecto {
 		this.programa += "if ";
 		insIfElse.exp1().procesa(this);
 		this.programa += " then\n";
-		insIfElse.linsv1().procesa(this);
+		if(insIfElse.linsv1() != null) insIfElse.linsv1().procesa(this);
 		this.programa += "\nelse\n";
-		insIfElse.linsv2().procesa(this);
+		if(insIfElse.linsv2() != null) insIfElse.linsv2().procesa(this);
 		this.programa += "\nendif";
 	}
 
@@ -321,7 +319,7 @@ public class Impresion extends ProcesamientoPorDefecto {
 		this.programa += "while ";
 		insWhile.exp1().procesa(this);
 		this.programa += " do\n";
-		insWhile.linsv().procesa(this);
+		if(insWhile.linsv() != null) insWhile.linsv().procesa(this);
 		this.programa += "\nendwhile";
 	}
 

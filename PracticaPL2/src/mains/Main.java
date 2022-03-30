@@ -5,7 +5,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import analizadorSintactico.AnalizadorSintacticoTiny1.Programa;
 import constructorAST_ascendente.AnalizadorLexicoTiny1;
+import procesamientos.ComprobacionTipos;
 import procesamientos.Impresion;
+import procesamientos.Vinculacion;
 
 public class Main {
 
@@ -23,6 +25,14 @@ public class Main {
 		Impresion impresion = new Impresion();
 		programa.procesa(impresion);
 		System.out.println(impresion.getPrograma());
+		
+		Vinculacion vinculacion = new Vinculacion();
+		programa.procesa(vinculacion);
+		
+		ComprobacionTipos comprobacionTipos = new ComprobacionTipos();
+		programa.procesa(comprobacionTipos);
+		
+		System.out.println("OK");
 	}
 
 	private static Programa ejecuta_ascendente(String in) throws Exception {
