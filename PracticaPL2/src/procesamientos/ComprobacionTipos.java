@@ -65,7 +65,6 @@ import analizadorSintactico.AnalizadorSintacticoTiny1.NumReal;
 import analizadorSintactico.AnalizadorSintacticoTiny1.Or;
 import analizadorSintactico.AnalizadorSintacticoTiny1.Param;
 import analizadorSintactico.AnalizadorSintacticoTiny1.Programa;
-import analizadorSintactico.AnalizadorSintacticoTiny1.Referencia;
 import analizadorSintactico.AnalizadorSintacticoTiny1.Resta;
 import analizadorSintactico.AnalizadorSintacticoTiny1.StringLocalizado;
 import analizadorSintactico.AnalizadorSintacticoTiny1.Suma;
@@ -84,10 +83,8 @@ import analizadorSintactico.AnalizadorSintacticoTiny1.True;
 
 public class ComprobacionTipos extends ProcesamientoPorDefecto {
 
-	private HashMap<Nodo, Nodo> tabla;
-	
 	public ComprobacionTipos() {
-		tabla = new HashMap<Nodo, Nodo>();
+		new HashMap<Nodo, Nodo>();
 	}
 	
 	public void procesa(Programa programa) {
@@ -395,10 +392,10 @@ public class ComprobacionTipos extends ProcesamientoPorDefecto {
 				DecProc nodo = (DecProc) insCall.getVinculo();
 				if (cuentaParamsReales(insCall.lparamsreales()) == cuentaParamsReales(nodo.lparams())) {
 					if (compatibleParamsFormalesReales(insCall.lparamsreales(), nodo.lparams())) {
-						tabla = new HashMap<Nodo, Nodo>();
+						new HashMap<Nodo, Nodo>();
 						insCall.setTipoNodo(TipoEnum.OK);
 					} else {
-						tabla = new HashMap<Nodo, Nodo>();
+						new HashMap<Nodo, Nodo>();
 						insCall.setTipoNodo(TipoEnum.ERROR);
 						System.err.println("Los argumentos de la llamada en " + insCall.id().toStringErr() + " no coinciden con los de la declaracion del proceso.");
 					}
@@ -419,7 +416,7 @@ public class ComprobacionTipos extends ProcesamientoPorDefecto {
 		insAsignacion.exp2().procesa(this);
 		
 		if (compatible(insAsignacion.exp1(), insAsignacion.exp2())) {
-			tabla = new HashMap<Nodo, Nodo>();
+			new HashMap<Nodo, Nodo>();
 			if (insAsignacion.exp1().esDesignador())
 				insAsignacion.setTipoNodo(TipoEnum.OK);
 			else {
@@ -427,7 +424,7 @@ public class ComprobacionTipos extends ProcesamientoPorDefecto {
 				System.out.println("La expresion " + insAsignacion.exp1() + " debe ser un designador");
 			}
 		} else {
-			tabla = new HashMap<Nodo, Nodo>();
+			new HashMap<Nodo, Nodo>();
 			insAsignacion.setTipoNodo(TipoEnum.ERROR);
 			System.out.println("Los tipos de las expresiones no son compatibles.");
 		}
